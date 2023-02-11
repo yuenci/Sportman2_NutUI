@@ -1,10 +1,21 @@
 <template>
-    <nut-button type="primary" color="#339af0" @click="handleClick">主要按钮</nut-button>
+    <div class="navbat-top">
+        <nut-navbar @on-click-back="back" @on-click-title="title" title="订单详情">
+            <template #left>
+                <div>返回</div>
+            </template>
+            <template #right>
+                <ShareN width="16px"></ShareN>
+            </template>
+        </nut-navbar>
+    </div>
+    <!-- <nut-button type="primary" color="#339af0" @click="handleClick">主要按钮</nut-button> -->
     <div class="cells-container">
         <!-- use for loop this.words -->
         <nut-cell v-for="(value, key) in words" :key="key" :title="value.word" :sub-title="value.explain"></nut-cell>
-
+        <nut-backtop></nut-backtop>
     </div>
+
 
     <nut-tabbar @tab-switch="tabSwitch" class="tabbar-bottom">
         <nut-tabbar-item tab-title="Words">
@@ -32,7 +43,7 @@ export default {
     data() {
         return {
             words: {},
-            count: 10,
+            count: 100,
         }
     },
     methods: {
@@ -53,11 +64,6 @@ export default {
                 }
             }
         },
-
-        handleScroll() {
-            this.count += 10;
-            this.loadWords(this.count);
-        }
     },
     setup() {
         function tabSwitch(item, index) {
@@ -78,10 +84,15 @@ export default {
 </script>
 
 <style scoped>
-.tabbar-bottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 100;
+.nut-navbar {
+    margin-bottom: 10px !important;
+}
+
+.cells-container {
+    background-color: aqua;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 0px 5px;
+    height: calc(100vh - 50px - 50px - 5px);
 }
 </style>
