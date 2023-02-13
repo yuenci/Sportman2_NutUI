@@ -20,7 +20,26 @@
 <script>
 import { Order, Heart, Category } from '@nutui/icons-vue';
 export default {
-    components: { Order, Heart, Category }
+    components: { Order, Heart, Category },
+    methods: {
+
+        tabSwitch(item, index) {
+            //console.log(item, index);
+            switch (index) {
+                case 0:
+                    this.$router.push('/words');
+                    break;
+                case 1:
+                    this.$router.push('/learning');
+                    break;
+                case 2:
+                    this.$router.push('/data');
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
 </script>
 <style>

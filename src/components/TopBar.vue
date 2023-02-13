@@ -1,5 +1,5 @@
 <template lang="">
-    <nut-navbar  :title="title">
+    <nut-navbar  :title="titleName">
             <!-- <template #left>
                 <div></div>
             </template>
@@ -10,9 +10,27 @@
 </template>
 <script>
 export default {
-    props: {
-        title: String
+    data() {
+        return {
+            titleName: "Words",
+        }
     },
+
+    created() {
+        switch (this.$route.path) {
+            case "/words":
+                this.titleName = "Words";
+                break;
+            case "/learning":
+                this.titleName = "Learning";
+                break;
+            case "/data":
+                this.titleName = "Data";
+                break;
+            default:
+                break;
+        }
+    }
 }
 </script>
 <style lang="">

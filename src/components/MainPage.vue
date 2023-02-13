@@ -57,12 +57,4 @@ export default {
 .nut-navbar {
     margin-bottom: 10px !important;
 }
-
-.cells-container {
-    background-color: aqua;
-    overflow: auto;
-    box-sizing: border-box;
-    padding: 0px 5px;
-    height: calc(100vh - 50px - 50px - 5px);
-}
 </style>

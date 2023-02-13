@@ -1,7 +1,7 @@
 <template>
-  <TopBar />
+  <TopBar :key="$route.fullPath" />
   <router-view></router-view>
-  <FootBar />
+  <FootBar class="footbar" />
 </template>
 
 <script >
@@ -15,18 +15,16 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.footbar {
+  position: relative;
+  bottom: 0px;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.cells-container {
+  background-color: aqua;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0px 5px;
+  height: calc(100vh - 50px - 50px - 20px);
 }
 </style>
