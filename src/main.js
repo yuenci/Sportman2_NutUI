@@ -14,7 +14,8 @@ const routes = [
     { path: '/', component: MainPage },
     { path: '/main', component: MainPage },
     { path: '/:pathMatch(.*)*', component: MainPage },
-    { path: '/learning', component: LearningPage },
+    { path: '/learning/', component: LearningPage },
+    { path: '/learning/:word', component: LearningPage },
     { path: '/data', component: DataPage }
 ]
 

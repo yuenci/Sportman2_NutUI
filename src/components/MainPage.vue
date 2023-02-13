@@ -1,15 +1,18 @@
 <template>
     <div class="cells-container">
         <!-- use for loop this.words -->
-        <nut-cell v-for="(value, key) in words" :key="key" :title="value.word" :sub-title="value.explain"></nut-cell>
+        <WordCard v-for="(value, key) in words" :key="key" :word="value.word" :explain="value.explain"></WordCard>
         <nut-backtop></nut-backtop>
     </div>
 </template>
 <script>
 import StatusContainer from '../statusContainer.js';
-
+import WordCard from './WordCard.vue';
 
 export default {
+    components: {
+        WordCard,
+    },
     data() {
         return {
             words: {},
