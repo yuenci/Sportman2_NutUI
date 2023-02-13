@@ -33,6 +33,9 @@ export default {
     }
 }
 </script>
-<style lang="">
-    
+<style>
+.nut-navbar {
+    padding: 0 !important;
+    margin: 0 !important;
+}
 </style>

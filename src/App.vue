@@ -25,7 +25,7 @@ export default {
   overflow: auto;
   box-sizing: border-box;
   padding: 0px 5px;
-  height: calc(100vh - 50px - 50px - 20px);
+  height: calc(100vh - 50px - 45px);
 }
 
 .cells-container::-webkit-scrollbar {
