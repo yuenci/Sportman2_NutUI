@@ -1,13 +1,15 @@
 <template lang="">
-    <div>
-        hellow speaking {{word}}
-    </div>
 </template>
 <script>
 export default {
     data() {
         return {
             word: "",
+        }
+    },
+    methods: {
+        callback(data) {
+            console.debug(data)
         }
     },
 

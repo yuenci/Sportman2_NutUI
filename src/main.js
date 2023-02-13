@@ -10,6 +10,7 @@ import DataPage from './components/DataPage.vue'
 
 
 
+
 const routes = [
     { path: '/', component: MainPage },
     { path: '/words', component: MainPage },
@@ -29,4 +30,5 @@ const router = VueRouter.createRouter({
 const app = createApp(App)
 app.use(NutUI)
 app.use(router)
+// app.use(AudioRecorder)
 app.mount('#app')
