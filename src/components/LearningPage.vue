@@ -1,16 +1,38 @@
 <template lang="">
     <div class="cells-container">
         <nut-cell>
-            <nut-indicator :block="true" algin="center" :size="6" :current="5">step1</nut-indicator>
+            <nut-row>
+                <nut-col :span="12">
+                    <nut-indicator :block="true" algin="center" :size="pageSize" :current="currentPage+1"></nut-indicator>
+                </nut-col>
+                <nut-col :span="12">
+                    <div v-if="currentPage === 0">Explanation</div>
+                    <div v-if="currentPage === 1">Example</div>
+                    <div v-if="currentPage === 2">Reading</div>
+                    <div v-if="currentPage === 3">Writing</div>
+                    <div v-if="currentPage === 4">Listening</div>
+                    <div v-if="currentPage === 5">Speaking</div>
+                </nut-col>
+            </nut-row>
+            
         </nut-cell>
-        <div class="word-con">{{capitalizeFirstLetter}}</div>
+        
+        <div class="learning-con">
+            <Explanation v-if="currentPage === 0"/>
+            <Example v-if="currentPage === 1" />
+            <Reading v-if="currentPage === 2" />
+            <Writing v-if="currentPage === 3" />
+            <Listening v-if="currentPage === 4" />
+            <Speaking v-if="currentPage === 5" />
+        </div>
+
         <div class="move-btns">
-            <nut-button type="info" size="mini">
+            <nut-button type="info" size="mini" :disabled="disabledLeft" @click="changePage('prev')">
                 <template #icon>
                      <RectLeft />
                 </template>
             </nut-button>
-            <nut-button type="info" size="mini">
+            <nut-button type="info" size="mini" :disabled="disabledRight" @click="changePage('next')">
                 <template #icon>
                     <RectRight />
                 </template>
@@ -20,24 +42,28 @@
 </template>
 <script>
 import { RectLeft, RectRight } from '@nutui/icons-vue';
-import explanation from './Learning/explanation.vue';
-import example from './Learning/example.vue';
-import reading from './Learning/reading.vue';
-import writing from './Learning/writing.vue';
-import listening from './Learning/listening.vue';
-import speaking from './Learning/speaking.vue';
+import Explanation from './Learning/Explanation.vue';
+import Example from './Learning/Example.vue';
+import Reading from './Learning/Reading.vue';
+import Writing from './Learning/Writing.vue';
+import Listening from './Learning/Listening.vue';
+import Speaking from './Learning/Speaking.vue';
+import StatusContainer from '../StatusContainer.js';
 
 
 export default {
     components: {
         RectLeft, RectRight,
-        explanation, example,
-        reading, writing, listening, speaking
+        Explanation, Example,
+        Reading, Writing, Listening, Speaking
     },
     data() {
         return {
-            word: "world",
+            word: "",
+            pageSize: 6,
             currentPage: 0,
+            disabledLeft: true,
+            disabledRight: false,
         }
     },
     computed: {
@@ -47,8 +73,26 @@ export default {
     },
 
     created() {
-        this.word = this.$route.params.word || "world";
-    }
+        this.word = this.$route.params.word || localStorage.getItem("currentWord");
+        StatusContainer.currentWord = this.word;
+        localStorage.setItem("currentWord", this.word);
+    },
+
+    methods: {
+        changePage(type) {
+            if (type === "next") {
+                if (this.currentPage === this.pageSize - 1) return
+                this.currentPage++;
+            }
+            else {
+                if (this.currentPage === 0) return;
+                this.currentPage--;
+            }
+
+            this.disabledLeft = this.currentPage === 0;
+            this.disabledRight = this.currentPage === this.pageSize - 1;
+        }
+    },
 }
 </script>
 <style scoped>
@@ -61,5 +105,9 @@ export default {
 .move-btns {
     display: flex;
     justify-content: space-around;
+}
+
+.learning-con {
+    height: calc(100vh - 50px - 45px - 50px - 50px);
 }
 </style>

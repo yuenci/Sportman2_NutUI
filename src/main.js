@@ -12,6 +12,7 @@ import DataPage from './components/DataPage.vue'
 
 const routes = [
     { path: '/', component: MainPage },
+    { path: '/words', component: MainPage },
     { path: '/main', component: MainPage },
     { path: '/:pathMatch(.*)*', component: MainPage },
     { path: '/learning/', component: LearningPage },

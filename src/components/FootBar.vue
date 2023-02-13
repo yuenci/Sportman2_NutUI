@@ -1,5 +1,5 @@
 <template>
-    <nut-tabbar @tab-switch="tabSwitch" class="tabbar-bottom">
+    <nut-tabbar @tab-switch="tabSwitch" class="tabbar-bottom" v-model="active">
         <nut-tabbar-item tab-title="Words">
             <template #icon>
                 <Order></Order>
@@ -21,6 +21,11 @@
 import { Order, Heart, Category } from '@nutui/icons-vue';
 export default {
     components: { Order, Heart, Category },
+    data() {
+        return {
+            active: 2,
+        }
+    },
     methods: {
 
         tabSwitch(item, index) {
@@ -39,7 +44,21 @@ export default {
                     break;
             }
         }
-    }
+    },
+    created() {
+        let url = this.$route.path;
+        switch (url) {
+            case '/words':
+                this.active = 0;
+                break;
+            case '/data':
+                this.active = 2;
+                break;
+            default:
+                this.active = 1;
+                break;
+        }
+    },
 }
 </script>
 <style>
