@@ -1,45 +1,15 @@
 <template>
-    <div class="navbat-top">
-        <nut-navbar @on-click-back="back" @on-click-title="title" title="订单详情">
-            <template #left>
-                <div>返回</div>
-            </template>
-            <template #right>
-                <ShareN width="16px"></ShareN>
-            </template>
-        </nut-navbar>
-    </div>
-    <!-- <nut-button type="primary" color="#339af0" @click="handleClick">主要按钮</nut-button> -->
     <div class="cells-container">
         <!-- use for loop this.words -->
         <nut-cell v-for="(value, key) in words" :key="key" :title="value.word" :sub-title="value.explain"></nut-cell>
         <nut-backtop></nut-backtop>
     </div>
-
-
-    <nut-tabbar @tab-switch="tabSwitch" class="tabbar-bottom">
-        <nut-tabbar-item tab-title="Words">
-            <template #icon>
-                <Order></Order>
-            </template>
-        </nut-tabbar-item>
-        <nut-tabbar-item tab-title="Learn">
-            <template #icon>
-                <Heart></Heart>
-            </template>
-        </nut-tabbar-item>
-        <nut-tabbar-item tab-title="Data">
-            <template #icon>
-                <Category></Category>
-            </template>
-        </nut-tabbar-item>
-    </nut-tabbar>
 </template>
 <script>
 import StatusContainer from '../statusContainer.js';
-import { Order, Heart, Category } from '@nutui/icons-vue';
+
+
 export default {
-    components: { Order, Heart, Category },
     data() {
         return {
             words: {},

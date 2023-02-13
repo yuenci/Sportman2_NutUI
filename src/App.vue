@@ -1,12 +1,15 @@
 <template>
-  <MainPage />
+  <TopBar />
+  <router-view></router-view>
+  <FootBar />
 </template>
 
 <script >
-import MainPage from './components/MainPage.vue'
+import FootBar from './components/FootBar.vue';
+import TopBar from './components/TopBar.vue';
 export default {
   components: {
-    MainPage
+    FootBar, TopBar
   }
 }
 </script>
