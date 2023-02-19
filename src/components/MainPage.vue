@@ -16,26 +16,11 @@ export default {
     data() {
         return {
             words: {},
-            count: 100,
         }
     },
     methods: {
         handleClick() {
             console.log(StatusContainer.getWords);
-        },
-        loadWords(number) {
-            let words = StatusContainer.getWords;
-            let keys = Object.keys(words);
-
-            for (let index = 0; index < number; index++) {
-                const key = keys[index];
-                const word = words[key]["word"];
-                const explain = words[key]["explain"];
-                this.words[key] = {
-                    word: word,
-                    explain: explain,
-                }
-            }
         },
     },
     setup() {
@@ -49,8 +34,8 @@ export default {
 
     // after the component is created, the following code will be executed
     created() {
-        StatusContainer.fetchWords().then(() => {
-            this.loadWords(this.count);
+        StatusContainer.fetchWords().then((data) => {
+            this.words = data;
         });
     }
 }

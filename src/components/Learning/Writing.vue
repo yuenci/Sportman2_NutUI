@@ -14,7 +14,6 @@ export default {
 
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
-        console.log(this.word);
     },
 }
 </script>

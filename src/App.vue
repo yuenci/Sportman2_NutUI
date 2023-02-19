@@ -18,6 +18,9 @@ export default {
       startTimeStamp: 0,
     }
   },
+  created() {
+    // StatusContainer.fetchWords();
+  },
   mounted() {
     window.addEventListener('beforeunload', this.handleBeforeUnload)
     this.startTimeStamp = new Date().getTime();

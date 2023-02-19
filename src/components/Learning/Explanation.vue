@@ -17,20 +17,29 @@ export default {
             freeDictionaryAPI: ""
         }
     },
+    methods: {
+        getExplanation() {
+            fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + this.word)
+                .then(response => response.json())
+                .then(data => {
+                    data = data[0]["meanings"][0]["definitions"]
+                    this.freeDictionaryAPI = data;
+                    //console.log(data);
+                });
+        }
+    },
 
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
-        //console.log(this.word);
-        //console.log(StatusContainer.getWords[this.word].explain);
-        this.explaination = StatusContainer.getWords[this.word].explain;
-
-        fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + this.word)
-            .then(response => response.json())
-            .then(data => {
-                data = data[0]["meanings"][0]["definitions"]
-                this.freeDictionaryAPI = data;
-                //console.log(data);
+        if (Object.keys(StatusContainer.getWords).length === 0) {
+            StatusContainer.fetchWords().then((data) => {
+                this.explaination = data[this.word].explain;
+                this.getExplanation();
             });
+        } else {
+            this.explaination = StatusContainer.getWords[this.word].explain;
+            this.getExplanation();
+        }
     },
 
     computed: {
