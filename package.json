@@ -14,6 +14,7 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@types/recorder-js": "^1.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "vite": "^4.1.0"
   }

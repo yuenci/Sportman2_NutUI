@@ -336,6 +336,11 @@
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-1.0.0.tgz"
   "version" "1.0.0"
 
+"@types/recorder-js@^1.0.2":
+  "integrity" "sha512-Q5dMNR4ASWK6NXlnfTcoqJqGeOnOwoSbnUCFd4yjt3xIFXIrk+AiGoznUyA+In+EyYTN7+7vJ+KSG8lnHlM78g=="
+  "resolved" "https://registry.npmjs.org/@types/recorder-js/-/recorder-js-1.0.2.tgz"
+  "version" "1.0.2"
+
 "@vitejs/plugin-vue@^4.0.0":
   "integrity" "sha512-e0X4jErIxAB5oLtDqbHvHpJe/uWNkdpYV83AOG2xo2tEVSzCzewgJMtREZM30wXnM5ls90hxiOtAuVU6H5JgbA=="
   "resolved" "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-4.0.0.tgz"
