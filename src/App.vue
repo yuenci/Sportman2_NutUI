@@ -35,7 +35,8 @@ export default {
 
         let endTimeStamp = new Date().getTime();
         let duration = (endTimeStamp - this.startTimeStamp) / 1000;
-        console.log("duration: " + Math.round(duration));
+        //console.log("duration: " + Math.round(duration));
+        this.saveDurationToLocal(Math.round(duration));
       }
     },
     saveDurationToLocal(durationNum) {
