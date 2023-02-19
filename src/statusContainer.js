@@ -1,6 +1,7 @@
 export default class StatusContainer {
     static getWords = {};
     static currentWord = '';
+    static startTimeStamp = 0;
     static fetchWords() {
         return new Promise((resolve, reject) => {
             fetch('src/output.json')

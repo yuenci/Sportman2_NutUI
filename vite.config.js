@@ -14,5 +14,10 @@ export default defineConfig({
         additionalData: `@nutui/nutui/dist/styles/variables-jdt.scss";`
       }
     }
-  }
+  },
+  server: {
+    open: true,
+    port: 5173,
+    host: '0.0.0.0'
+  },
 })

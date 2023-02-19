@@ -7,9 +7,45 @@
 <script >
 import FootBar from './components/FootBar.vue';
 import TopBar from './components/TopBar.vue';
+import StatusContainer from './statusContainer.js';
 export default {
   components: {
     FootBar, TopBar
+  },
+  data() {
+    return {
+      unsavedChanges: true,
+      startTimeStamp: 0,
+    }
+  },
+  mounted() {
+    window.addEventListener('beforeunload', this.handleBeforeUnload)
+    this.startTimeStamp = new Date().getTime();
+    console.log("start time: " + this.startTimeStamp);
+  },
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.handleBeforeUnload)
+  },
+  methods: {
+    handleBeforeUnload(event) {
+      if (this.unsavedChanges) {
+        // 取消默认事件，弹出未保存提示框
+        event.preventDefault()
+        event.returnValue = ''
+
+        let endTimeStamp = new Date().getTime();
+        let duration = (endTimeStamp - this.startTimeStamp) / 1000;
+        console.log("duration: " + Math.round(duration));
+      }
+    },
+    saveDurationToLocal(durationNum) {
+      let duration = localStorage.getItem("duration");
+      if (duration == null) {
+        localStorage.setItem("duration", durationNum);
+      } else {
+        localStorage.setItem("duration", parseInt(duration) + durationNum);
+      }
+    }
   }
 }
 </script>
