@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <audio src="" id="audio">111</audio>
+  <button>1111</button>
+  <script>
+    function speech() {
+      const SPEECH_REGION = "eastasia";
+      const SPEECH_KEY = "248ea9353a2949e58bc7b431d05f399e";
+
+      const url = `https://${SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
+      const data = `<speak version='1.0' xml:lang='en-US'>
+    <voice xml:lang='en-US' xml:gender='Female' name='en-US-JennyNeural'>
+        my voice is my passport verify me
+    </voice>
+    </speak>`;
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Ocp-Apim-Subscription-Key": SPEECH_KEY,
+          "Content-Type": "application/ssml+xml",
+          "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+          "User-Agent": "curl"
+        },
+        body: data
+      };
+
+      let audio = document.getElementById("audio");
+      let button = document.querySelector("button");
+      button.addEventListener("click", () => {
+        audio.play();
+      });
+
+      fetch(url, requestOptions)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+          //console.log(data);
+          const blob = new Blob([data], { type: "audio/mp3" });
+          const url = window.URL.createObjectURL(blob);
+          audio.src = url;
+          // const link = document.createElement("a");
+          // link.href = url;
+          // link.download = "output.mp3";
+          // document.body.appendChild(link);
+          // link.click();
+          // document.body.removeChild(link);
+        })
+        .catch(error => console.log(error));
+    }
+    window.onload = speech;
+  </script>
+</body>
+
+</html>

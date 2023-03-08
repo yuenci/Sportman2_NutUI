@@ -9,6 +9,7 @@
 <script>
 import StatusContainer from '../../statusContainer.js';
 import { Voice } from '@nutui/icons-vue';
+import { configs } from "../../config.js"
 
 export default {
     components: {
@@ -36,6 +37,38 @@ export default {
         play() {
             this.$refs.audio.play();
         },
+        speech() {
+            const SPEECH_REGION = configs.serviceRegion;
+            const SPEECH_KEY = configs.subscriptionKey;
+
+            const url = `https://${SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
+            const data = `<speak version='1.0' xml:lang='en-US'>
+                        <voice xml:lang='en-US' xml:gender='Female' name='en-US-JennyNeural'>
+                            my voice is my passport verify me
+                        </voice>
+                        </speak>`;
+
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Ocp-Apim-Subscription-Key": SPEECH_KEY,
+                    "Content-Type": "application/ssml+xml",
+                    "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+                    "User-Agent": "curl"
+                },
+                body: data
+            };
+
+            fetch(url, requestOptions)
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    //console.log(data);
+                    const blob = new Blob([data], { type: "audio/mp3" });
+                    const url = window.URL.createObjectURL(blob);
+                    this.URL = url;
+                })
+                .catch(error => console.log(error));
+        }
     },
 }
 </script>
