@@ -8,7 +8,7 @@
         <div class="cells-container">
             <!-- use for loop this.words -->
             <WordCard v-for="(value, key) in words" :key="key" :word="value[0]" :explain="value[1]"></WordCard>
-            <nut-backtop></nut-backtop>
+            <nut-backtop :bottom="60"></nut-backtop>
         </div>
     </div>
 </template>
