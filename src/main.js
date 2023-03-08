@@ -7,6 +7,8 @@ import * as VueRouter from 'vue-router'
 import MainPage from './components/MainPage.vue'
 import LearningPage from './components/LearningPage.vue'
 import DataPage from './components/DataPage.vue'
+import InboxPage from './components/InboxPage.vue'
+import SettingsPage from './components/SettingsPage.vue'
 
 
 
@@ -18,7 +20,9 @@ const routes = [
     { path: '/:pathMatch(.*)*', component: MainPage },
     { path: '/learning/', component: LearningPage },
     { path: '/learning/:word', component: LearningPage },
-    { path: '/data', component: DataPage }
+    { path: '/data', component: DataPage },
+    { path: '/inbox', component: InboxPage },
+    { path: '/settings', component: SettingsPage },
 ]
 
 

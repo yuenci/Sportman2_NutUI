@@ -5,6 +5,11 @@
                 <Order></Order>
             </template>
         </nut-tabbar-item>
+        <nut-tabbar-item tab-title="Inbox">
+            <template #icon>
+                <Addfollow></Addfollow>
+            </template>
+        </nut-tabbar-item>
         <nut-tabbar-item tab-title="Learn">
             <template #icon>
                 <Heart></Heart>
@@ -15,12 +20,17 @@
                 <Category></Category>
             </template>
         </nut-tabbar-item>
+        <nut-tabbar-item tab-title="Setting">
+            <template #icon>
+                <Setting></Setting>
+            </template>
+        </nut-tabbar-item>
     </nut-tabbar>
 </template>
 <script>
-import { Order, Heart, Category } from '@nutui/icons-vue';
+import { Order, Heart, Category, Setting, Addfollow } from '@nutui/icons-vue';
 export default {
-    components: { Order, Heart, Category },
+    components: { Order, Heart, Category, Setting, Addfollow },
     data() {
         return {
             active: 2,
@@ -35,10 +45,16 @@ export default {
                     this.$router.push('/words');
                     break;
                 case 1:
-                    this.$router.push('/learning');
+                    this.$router.push('/inbox');
                     break;
                 case 2:
+                    this.$router.push('/learning');
+                    break;
+                case 3:
                     this.$router.push('/data');
+                    break;
+                case 4:
+                    this.$router.push('/settings');
                     break;
                 default:
                     break;
@@ -52,7 +68,7 @@ export default {
                 this.active = 0;
                 break;
             case '/data':
-                this.active = 2;
+                this.active = 3;
                 break;
             default:
                 this.active = 1;
@@ -61,6 +77,4 @@ export default {
     },
 }
 </script>
-<style>
-
-</style>
+<style></style>
