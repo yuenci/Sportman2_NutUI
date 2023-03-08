@@ -103,6 +103,9 @@ export default {
 }
 
 .move-btns {
+    position: absolute;
+    bottom: 70px;
+    width: calc(100% - 10px);
     display: flex;
     justify-content: space-around;
 }
