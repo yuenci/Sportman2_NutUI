@@ -19,14 +19,15 @@ export default {
         return {
             word: "",
             example: "",
-            URL: "https://dict.youdao.com/dictvoice?audio=",
+            URL: "",
             duration: "0''",
         }
     },
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
         this.example = StatusContainer.getWords[this.word].learner_example[0];
-        this.URL = this.URL + this.example + "&type=1";
+        // this.URL = this.URL + this.example + "&type=1";
+        this.speech(this.example);
         setTimeout(() => {
             this.duration = this.$refs.audio.duration;
             // keep the duration to 0 decimal place
@@ -37,14 +38,14 @@ export default {
         play() {
             this.$refs.audio.play();
         },
-        speech() {
+        speech(text) {
             const SPEECH_REGION = configs.serviceRegion;
             const SPEECH_KEY = configs.subscriptionKey;
 
             const url = `https://${SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
             const data = `<speak version='1.0' xml:lang='en-US'>
                         <voice xml:lang='en-US' xml:gender='Female' name='en-US-JennyNeural'>
-                            my voice is my passport verify me
+                            ${text}
                         </voice>
                         </speak>`;
 
