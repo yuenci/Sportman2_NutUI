@@ -1,5 +1,6 @@
 export default class StatusContainer {
     static getWords = {};
+    static getWordsArray = [];
     static currentWord = '';
     static startTimeStamp = 0;
     static fetchWords() {
@@ -11,5 +12,26 @@ export default class StatusContainer {
                     resolve(data);
                 });
         });
+    }
+
+    static fetchWordsArray() {
+        return new Promise((resolve, reject) => {
+            fetch('/output.json')
+                .then(response => response.json())
+                .then(data => {
+                    //console.log(data);
+                    let arrayData = StatusContainer.dictToArray(data);
+                    StatusContainer.getWordsArray = arrayData;
+                    resolve(arrayData);
+                });
+        });
+    }
+
+    static dictToArray(dict) {
+        let arr = [];
+        for (let key in dict) {
+            arr.push([dict[key].word, dict[key].learner_example[0]]);
+        }
+        return arr;
     }
 }

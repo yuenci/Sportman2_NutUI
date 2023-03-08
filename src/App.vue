@@ -1,13 +1,14 @@
 <template>
   <TopBar :key="$route.fullPath" />
   <router-view></router-view>
-  <FootBar class="footbar" />
+  <div class="footbar">
+    <FootBar />
+  </div>
 </template>
 
 <script >
 import FootBar from './components/FootBar.vue';
 import TopBar from './components/TopBar.vue';
-import StatusContainer from './statusContainer.js';
 export default {
   components: {
     FootBar, TopBar
@@ -56,8 +57,9 @@ export default {
 
 <style scoped>
 .footbar {
-  position: relative;
+  position: fixed;
   bottom: 0px;
+  width: 100%;
 }
 
 .cells-container {
