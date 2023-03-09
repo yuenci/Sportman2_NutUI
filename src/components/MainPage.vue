@@ -6,7 +6,7 @@
             </template>
         </nut-searchbar>
 
-        <CardsContainer :words="words"></CardsContainer>
+        <CardsContainer :words="visibleWords"></CardsContainer>
     </div>
 </template>
 
@@ -24,6 +24,9 @@ export default {
         return {
             words: [],
             searchValue: "",
+            visibleWords: [], // 当前可见的单词数组
+            visibleWordsCount: 30, // 每次加载30个单词
+            visibleWordsIndex: 30,  // 当前可见单词数组的索引
         }
     },
     methods: {
@@ -59,8 +62,27 @@ export default {
         // });
         StatusContainer.fetchWordsArray().then((data) => {
             this.words = data;
+            this.visibleWords = data.slice(0, this.visibleWordsIndex);
+        });
+    },
+    mounted() {
+        // Infinite scrolling
+        window.addEventListener('scroll', () => {
+            if (document.body.offsetHeight - window.scrollY < 700) {
+                this.visibleWordsIndex += this.visibleWordsCount;
+                this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
+            }
+        });
+    },
+    beforeDestroy() {
+        window.removeEventListener('scroll', () => {
+            if (document.body.offsetHeight - window.scrollY < 700) {
+                this.visibleWordsIndex += this.visibleWordsCount;
+                this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
+            }
         });
     }
+
 }
 </script>
 
