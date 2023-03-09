@@ -28,11 +28,7 @@ export default {
         this.example = StatusContainer.getWords[this.word].learner_example[0];
         // this.URL = this.URL + this.example + "&type=1";
         this.speech(this.example);
-        setTimeout(() => {
-            this.duration = this.$refs.audio.duration;
-            // keep the duration to 0 decimal place
-            this.duration = Math.round(this.duration) + "''"
-        }, 1000);
+
     },
     methods: {
         play() {
@@ -67,10 +63,18 @@ export default {
                     const blob = new Blob([data], { type: "audio/mp3" });
                     const url = window.URL.createObjectURL(blob);
                     this.URL = url;
+                    //this.showDuration();
                 })
                 .catch(error => console.log(error));
-        }
+        },
     },
+    mounted() {
+        this.$refs.audio.addEventListener("loadedmetadata", () => {
+            let duration = this.$refs.audio.duration;
+            let seconds = Math.round(duration);
+            this.duration = seconds + "''";
+        });
+    }
 }
 </script>
 

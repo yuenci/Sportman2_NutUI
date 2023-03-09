@@ -1,7 +1,7 @@
 # TODO
 
 * [X] fix: no tabbar change when learning method start (use pubhub)
-* [ ] fix: audio duration error
+* [X] fix: audio duration error
 * [ ] feat: recorder
 * [ ] feat: move data to cloud
 * [X] feat: dynamic loading / Infinite scrolling
