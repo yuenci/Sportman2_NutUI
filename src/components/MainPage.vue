@@ -5,27 +5,24 @@
                 <Search2 />
             </template>
         </nut-searchbar>
-        <div class="cells-container">
-            <!-- use for loop this.words -->
-            <WordCard v-for="(value, key) in words" :key="key" :word="value[0]" :explain="value[1]"></WordCard>
-            <nut-backtop :bottom="60"></nut-backtop>
-        </div>
+
+        <CardsContainer :words="words"></CardsContainer>
     </div>
 </template>
 
 <script>
 import StatusContainer from '../statusContainer.js';
-import WordCard from './WordCard.vue';
 import { Search2 } from '@nutui/icons-vue';
+import CardsContainer from './CardsContainer.vue';
 
 
 export default {
     components: {
-        WordCard, Search2
+        Search2, CardsContainer,
     },
     data() {
         return {
-            words: {},
+            words: [],
             searchValue: "",
         }
     },

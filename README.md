@@ -6,7 +6,7 @@
 * [ ] feat: dynamic loading
 * [ ] feat: inbox
 * [ ] feat: select menu
-* [ ] add tab items: setting  and inbox
+* [X] add tab items: setting  and inbox
 
 
 # deploy
