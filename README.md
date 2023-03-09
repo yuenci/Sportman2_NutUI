@@ -1,10 +1,10 @@
 # TODO
 
-* [ ] fix: no tabbar change when learning method start (use pubhub)
+* [X] fix: no tabbar change when learning method start (use pubhub)
 * [ ] fix: audio duration error
 * [ ] feat: recorder
 * [ ] feat: move data to cloud
-* [ ] feat: dynamic loading
+* [X] feat: dynamic loading / Infinite scrolling
 * [ ] feat: inbox
 * [ ] feat: select menu
 * [X] feat: add tab items: setting  and inbox

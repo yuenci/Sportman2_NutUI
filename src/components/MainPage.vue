@@ -25,8 +25,8 @@ export default {
             words: [],
             searchValue: "",
             visibleWords: [], // 当前可见的单词数组
-            visibleWordsCount: 30, // 每次加载30个单词
-            visibleWordsIndex: 30,  // 当前可见单词数组的索引
+            visibleWordsCount: 20, // 每次加载30个单词
+            visibleWordsIndex: 20,  // 当前可见单词数组的索引
         }
     },
     methods: {

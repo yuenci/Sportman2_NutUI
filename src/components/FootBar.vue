@@ -29,6 +29,8 @@
 </template>
 <script>
 import { Order, Heart, Category, Setting, Addfollow } from '@nutui/icons-vue';
+import PubSub from 'pubsub-js';
+
 export default {
     components: { Order, Heart, Category, Setting, Addfollow },
     data() {
@@ -75,6 +77,16 @@ export default {
                 break;
         }
     },
+    mounted() {
+        PubSub.subscribe('changeTab', (msg, data) => {
+            if (data.message === 'learn') {
+                this.active = 2;
+            }
+        });
+    },
+    beforeDestroy() {
+        PubSub.unsubscribe('changeTab');
+    }
 }
 </script>
 <style></style>

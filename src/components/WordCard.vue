@@ -2,6 +2,8 @@
     <nut-cell :title="word" :sub-title="explain" @click="goTolearning"></nut-cell>
 </template>
 <script>
+import PubSub from 'pubsub-js';
+
 export default {
     props: {
         word: String,
@@ -9,6 +11,7 @@ export default {
     },
     methods: {
         goTolearning() {
+            PubSub.publish('changeTab', { message: 'learn' });
             this.$router.push({ path: `/learning/${this.word}` });
         },
     },
