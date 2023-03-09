@@ -69,11 +69,20 @@ export default {
             case '/words':
                 this.active = 0;
                 break;
+            case '/inbox':
+                this.active = 1;
+                break;
+            case '/learning':
+                this.active = 2;
+                break;
             case '/data':
                 this.active = 3;
                 break;
+            case '/settings':
+                this.active = 4;
+                break;
             default:
-                this.active = 1;
+                this.active = 0;
                 break;
         }
     },

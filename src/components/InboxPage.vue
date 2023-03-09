@@ -1,23 +1,67 @@
 <template lang="">
     <div class="cells-container">
-        <h1>InboxPage</h1>
+        <div class="input-cell">
+            <div class="tip-text">Word</div>
+            <nut-input  v-model="word"  placeholder="Type a word" />
+        </div>
+         <div class="input-cell">
+            <div class="tip-text">Explain</div>
+             <nut-textarea v-model="explain" :rows="5" autosize limit-show max-length="140" placeholder="Enter the explain" />
+        </div>
+         <div class="input-cell">
+            <div class="tip-text">Learner example</div>
+            <nut-textarea v-model="learnerExample" :rows="5" autosize limit-show max-length="140" placeholder="Enter the Learner example" />
+        </div>
+         <div class="input-cell">
+            <div class="tip-text">Dictory example</div>
+            <nut-textarea v-model="dictoryExample" :rows="5" autosize limit-show max-length="140"  placeholder="Enter the Dictory example" />
+        </div>
+        <nut-button block type="primary" class="enter-btn" @click="addWord">Yes !</nut-button>
     </div>
     
 </template>
 <script>
+import { showNotify } from '@nutui/nutui';
 
 export default {
     data() {
         return {
-            customNumber: 0,
-            bgImage: 'https://img10.360buyimg.com/imagetools/jfs/t1/133024/3/2251/2646/5ee7549aE8dc02d7e/de6901b6c72db396.png',
+            word: '',
+            explain: '',
+            learnerExample: '',
+            dictoryExample: '',
         }
     },
-    // get duration from localStorage
-    created() {
-        let durationStr = localStorage.getItem("duration");
-        if (durationStr) {
-            this.customNumber = parseInt(durationStr);
+    methods: {
+        addWord() {
+            let url = "http://127.0.0.1:4999"
+            console.log(this.word, this.explain, this.learnerExample, this.dictoryExample);
+            // ues fetch send post request
+            if (!this.valid()) return;
+            fetch(`${url}/word`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    word: this.word,
+                    explain: this.explain,
+                    learnerExample: this.learnerExample,
+                    dictoryExample: this.dictoryExample,
+                }),
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    console.log(res);
+                });
+        },
+        valid() {
+            // if (this.word === '' || this.explain === '' || this.learnerExample === '' || this.dictoryExample === '') {
+            if (this.word === '') {
+                showNotify.warn('Please enter the word');
+                return false;
+            }
+            return true;
         }
     },
 };
@@ -27,7 +71,18 @@ export default {
     background-color: #fafafa;
     overflow: auto;
     box-sizing: border-box;
-    padding: 0px 5px;
+    padding: 0px 0px;
     height: calc(100vh - 50px - 45px);
+    padding: 0 5px;
+}
+
+.tip-text {
+    font-size: 14px;
+    color: #909ca4;
+    margin: 10px 28px;
+}
+
+.input-cell {
+    margin-bottom: 30px;
 }
 </style>

@@ -5,7 +5,7 @@
 * [ ] feat: recorder
 * [ ] feat: move data to cloud
 * [X] feat: dynamic loading / Infinite scrolling
-* [ ] feat: inbox
+* [X] feat: inbox
 * [ ] feat: select menu
 * [X] feat: add tab items: setting  and inbox
 * [ ] feat: SRS
