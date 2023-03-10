@@ -1,25 +1,46 @@
-<template lang="">
-    <div class="cells-container">
-        <h1>Setting page </h1>
-    </div>
-    
+<template>
+    <nut-cell-group title="Card display method">
+        <nut-cell>
+            <nut-radio-group v-model="cardDisplayMode" direction="horizontal" @change="changeHandler">
+                <nut-radio label="1">Word</nut-radio>
+                <nut-radio label="2">Example</nut-radio>
+                <nut-radio label="3">Explain</nut-radio>
+            </nut-radio-group>
+        </nut-cell>
+    </nut-cell-group>
 </template>
 <script>
-
+import StatusContainer from "../statusContainer.js"
 export default {
     data() {
         return {
-            customNumber: 0,
-            bgImage: 'https://img10.360buyimg.com/imagetools/jfs/t1/133024/3/2251/2646/5ee7549aE8dc02d7e/de6901b6c72db396.png',
+            cardDisplayMode: "1",
         }
     },
-    // get duration from localStorage
-    created() {
-        let durationStr = localStorage.getItem("duration");
-        if (durationStr) {
-            this.customNumber = parseInt(durationStr);
+    mounted() {
+        let settingsLocal = localStorage.getItem("settings");
+        if (settingsLocal) {
+            this.cardDisplayMode = JSON.parse(settingsLocal).cardDisplayMode;
+        } else {
+            let defaultSetting = StatusContainer.defaultSetting;
+            this.storeNewSettings(defaultSetting);
+            this.cardDisplayMode = defaultSetting.cardDisplayMode;
         }
     },
+    methods: {
+        show() {
+            console.log(this.settings);
+        },
+        storeNewSettings(settings) {
+            localStorage.setItem("settings", JSON.stringify(settings));
+        },
+        changeHandler(value) {
+            let settings = {
+                cardDisplayMode: value,
+            }
+            this.storeNewSettings(settings);
+        }
+    }
 };
 </script>
 <style scoped>

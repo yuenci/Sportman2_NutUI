@@ -34,4 +34,9 @@ export default class StatusContainer {
         }
         return arr;
     }
+
+
+    static defaultSetting = {
+        cardDisplayMode: 1,
+    };
 }
