@@ -30,7 +30,7 @@ export default class StatusContainer {
     static dictToArray(dict) {
         let arr = [];
         for (let key in dict) {
-            arr.push([dict[key].word, dict[key].explain]);
+            arr.push([dict[key].word, dict[key].explain, dict[key].learner_example]);
         }
         return arr;
     }

@@ -44,6 +44,35 @@ export default {
         clear() {
             this.searchValue = "";
             this.words = StatusContainer.getWordsArray;
+        },
+        cardDisplay(data) {
+            let settingsLocal = localStorage.getItem("settings");
+            let cardDisplayMode = "";
+            if (settingsLocal) {
+                cardDisplayMode = JSON.parse(settingsLocal).cardDisplayMode;
+            }
+            else {
+                return data;
+            }
+            if (cardDisplayMode === "1") {
+                let newData = data.map((item) => {
+                    return [item[0], item[1], item[0]];
+                });
+                return newData;
+            }
+            else if (cardDisplayMode === "2") {
+                let newData = data.map((item) => {
+                    return [item[2][0], item[0], item[0]];
+                });
+                return newData;
+            }
+            else if (cardDisplayMode === "3") {
+                let newData = data.map((item) => {
+                    return [item[1], item[0], item[0]];
+                });
+                return newData;
+            }
+
         }
     },
     setup() {
@@ -61,8 +90,11 @@ export default {
         //     this.words = data;
         // });
         StatusContainer.fetchWordsArray().then((data) => {
-            this.words = data;
-            this.visibleWords = data.slice(0, this.visibleWordsIndex);
+            //this.words = data;
+            // console.log(data);
+            // console.log(this.cardDisplay(data));
+            this.words = this.cardDisplay(data);
+            this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         });
     },
     mounted() {
