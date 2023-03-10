@@ -132,9 +132,7 @@ export default {
                     });
             });
         },
-    },
-    mounted() {
-        document.onmouseup = () => {
+        toastMenuShow() {
             var selectedText = window.getSelection().toString().trim();
             window.getSelection().removeAllRanges() // clear selection
 
@@ -152,6 +150,10 @@ export default {
                 });
             }
         }
+    },
+    mounted() {
+        document.onmouseup = this.toastMenuShow;
+        document.addEventListener("touchend", this.toastMenuShow, false);
     }
 }
 </script>
@@ -173,9 +175,11 @@ export default {
 .learning-con {
     height: calc(100vh - 50px - 45px - 50px - 50px);
 }
-
+</style>
+<style>
 .dialog-content {
     text-align: left !important;
     word-break: break-all !important;
+
 }
 </style>

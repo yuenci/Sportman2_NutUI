@@ -5,11 +5,12 @@
 * [ ] feat: recorder
 * [X] feat: dynamic loading / Infinite scrolling
 * [X] feat: inbox
-* [ ] feat: select menu
+* [X] feat: select menu
 * [X] feat: add tab items: setting  and inbox
-* [ ] feat: random method
+* [X] feat: random method
 * [ ] feat: SRS method
-* [ ] feat: move data to cloud
+* [ ] feat: move data & settings to cloud
+* [ ] feat: admin page for manage words
 
 # deploy
 
