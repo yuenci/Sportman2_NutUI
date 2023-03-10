@@ -145,7 +145,7 @@ export default {
                 this.textSeleted = selectedText;
                 console.log(selectedText);
                 this.getExplaimAndExample().then((data) => {
-                    console.log(data);
+                    //console.log(data);
                     this.showWordDialog(data[0], data[1]);
                 });
             }

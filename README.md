@@ -11,6 +11,7 @@
 * [ ] feat: SRS method
 * [ ] feat: move data & settings to cloud
 * [ ] feat: admin page for manage words
+* [ ] fix: change all to Britain accent
 
 # deploy
 

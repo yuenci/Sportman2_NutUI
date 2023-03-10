@@ -37,14 +37,14 @@ export default {
         search() {
             console.log(this.searchValue);
 
-            this.words = this.words.filter((item) => {
+            this.visibleWords = this.words.filter((item) => {
                 // if value.word or value.explain contains searchValue, return true
-                return item[0].includes(this.searchValue) || item[1].includes(this.searchValue);
+                return item[0].includes(this.searchValue) || item[1].includes(this.searchValue) || item[2].includes(this.searchValue);
             });
         },
         clear() {
             this.searchValue = "";
-            this.words = StatusContainer.getWordsArray;
+            this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         },
         cardDisplay(data) {
             let settingsLocal = localStorage.getItem("settings");
