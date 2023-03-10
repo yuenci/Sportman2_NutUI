@@ -48,7 +48,8 @@ import Writing from './Learning/Writing.vue';
 import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
-
+import { showDialog } from '@nutui/nutui';
+import { ref, createVNode } from 'vue';
 
 export default {
     components: {
@@ -63,6 +64,7 @@ export default {
             currentPage: 0,
             disabledLeft: true,
             disabledRight: false,
+            textSeleted: "",
         }
     },
     computed: {
@@ -94,8 +96,63 @@ export default {
 
             this.disabledLeft = this.currentPage === 0;
             this.disabledRight = this.currentPage === this.pageSize - 1;
-        }
+        },
+        showWordDialog(definition, example) {
+            const onCancel = () => {
+                //console.log('event cancel');
+            };
+            const onOk = () => {
+                //console.log('event ok');
+            };
+
+            showDialog({
+                title: this.textSeleted,
+                content: `
+                <div class="dialog-content">${definition}</div>
+                 <div class="dialog-content">${example}</div>
+                `,
+                onCancel,
+                onOk
+            });
+        },
+        getExplaimAndExample() {
+            let url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + this.textSeleted;
+            return new Promise((resolve, reject) => {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        let definition = "Explain: " + data[0]["meanings"][0]["definitions"][0]["definition"];
+                        let example = "Example: " + data[0]["meanings"][0]["definitions"][0]["example"];
+                        resolve([definition, example]);
+                        //console.log(definition, example);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        reject(err);
+                    });
+            });
+        },
     },
+    mounted() {
+        document.onmouseup = () => {
+            var selectedText = window.getSelection().toString().trim();
+            window.getSelection().removeAllRanges() // clear selection
+
+            if (selectedText == this.textSeleted) {
+                this.textSeleted = '';
+                return;
+            }
+
+            if (selectedText !== '') {
+                this.textSeleted = selectedText;
+                console.log(selectedText);
+                this.getExplaimAndExample().then((data) => {
+                    console.log(data);
+                    this.showWordDialog(data[0], data[1]);
+                });
+            }
+        }
+    }
 }
 </script>
 <style scoped>
@@ -115,5 +172,10 @@ export default {
 
 .learning-con {
     height: calc(100vh - 50px - 45px - 50px - 50px);
+}
+
+.dialog-content {
+    text-align: left !important;
+    word-break: break-all !important;
 }
 </style>

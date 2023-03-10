@@ -91,13 +91,7 @@ export default {
 
     // after the component is created, the following code will be executed
     created() {
-        // StatusContainer.fetchWords().then((data) => {
-        //     this.words = data;
-        // });
         StatusContainer.fetchWordsArray().then((data) => {
-            //this.words = data;
-            // console.log(data);
-            // console.log(this.cardDisplay(data));
             this.words = this.cardDisplay(data);
             this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         });

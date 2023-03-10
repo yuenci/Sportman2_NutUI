@@ -31,7 +31,11 @@ github: https://github.com/mdn/dom-examples/tree/main/media/web-dictaphone
 
 demo: https://mdn.github.io/dom-examples/media/web-dictaphone/
 
-
 # infinite-scroll
 
 https://www.npmjs.com/package/vue-infinite-scroll
+
+
+# Dictionary API
+
+https://dictionaryapi.dev/
