@@ -1,15 +1,16 @@
 <template lang="">
-    <div  class="learner_example">
-       <ul v-for="item in learner_example" :key="item">
-            <li>{{item}}</li>
-        </ul>
-    </div>
-    <div class="dictory_example">
-        <ul v-for="item in dictory_example" :key="item" >
-           <li>{{item}}</li>
-        </ul>
-    </div>
-    
+    <nut-collapse v-model="activeNames">
+        <nut-collapse-item title="Leaner Example" name="1">
+            <ul v-for="item in learner_example" :key="item">
+                <li>{{item}}</li>
+            </ul>
+        </nut-collapse-item>
+        <nut-collapse-item title="Dictionary Example" name="2">
+            <ul v-for="item in dictory_example" :key="item" >
+                <li>{{item}}</li>
+            </ul>
+        </nut-collapse-item>
+    </nut-collapse>
 </template>
 <script>
 import StatusContainer from '../../statusContainer.js';
@@ -19,6 +20,7 @@ export default {
             word: "",
             learner_example: "",
             dictory_example: "",
+            activeNames: ['1', '2'],
         }
     },
 

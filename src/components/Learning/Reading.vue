@@ -28,5 +28,6 @@ export default {
     align-items: center;
     height: 100%;
     text-align: center;
+    font-family: "Comic Sans MS";
 }
 </style>

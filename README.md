@@ -7,7 +7,8 @@
 * [X] feat: inbox
 * [ ] feat: select menu
 * [X] feat: add tab items: setting  and inbox
-* [ ] feat: SRS
+* [ ] feat: random method
+* [ ] feat: SRS method
 * [ ] feat: move data to cloud
 
 # deploy
