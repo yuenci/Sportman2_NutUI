@@ -14,7 +14,6 @@
                     <div v-if="currentPage === 5">Speaking</div>
                 </nut-col>
             </nut-row>
-            
         </nut-cell>
         
         <div class="learning-con">
@@ -77,7 +76,11 @@ export default {
         StatusContainer.currentWord = this.word;
         localStorage.setItem("currentWord", this.word);
     },
-
+    watch: {
+        $route(to, from) {
+            this.currentPage = 0;
+        }
+    },
     methods: {
         changePage(type) {
             if (type === "next") {
