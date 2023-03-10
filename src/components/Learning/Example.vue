@@ -9,6 +9,7 @@
            <li>{{item}}</li>
         </ul>
     </div>
+    
 </template>
 <script>
 import StatusContainer from '../../statusContainer.js';

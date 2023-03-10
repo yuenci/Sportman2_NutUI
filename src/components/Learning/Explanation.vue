@@ -1,11 +1,21 @@
 <template lang="">
-    <div class="word-con">{{capitalizeFirstLetter}}</div>
-    <div class="main-explaination">{{explaination}}</div>
-    <div class="explainations">
-        <div v-for="item in freeDictionaryAPI" :key="item" class="explaination">
-            {{item.definition}}
-        </div>
+    <div class="cells-container">
+        <div class="word-con">{{capitalizeFirstLetter}}</div>
+        <div class="main-explaination">{{explaination}}</div>
+        <nut-collapse v-model="activeNames" class="collapse">
+            <nut-collapse-item :name="1">
+                <template v-slot:title>
+                {{"More explainations"}}
+                </template>
+                <div class="">
+                    <div v-for="item in freeDictionaryAPI" :key="item" class="explaination">
+                        {{item.definition}}
+                    </div>
+                </div>
+            </nut-collapse-item>
+        </nut-collapse>
     </div>
+    
 </template>
 <script>
 import StatusContainer from '../../statusContainer.js';
@@ -14,7 +24,8 @@ export default {
         return {
             word: "",
             explaination: "",
-            freeDictionaryAPI: ""
+            freeDictionaryAPI: "",
+            activeNames: ['0'],
         }
     },
     methods: {
@@ -50,6 +61,10 @@ export default {
 }
 </script>
 <style scoped>
+.cells-container::-webkit-scrollbar {
+    display: none;
+}
+
 .word-con {
     font-size: 20px;
     color: #333;
@@ -64,6 +79,7 @@ export default {
     font-weight: 500;
     margin: 0 0 10px;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .explainations {

@@ -76,6 +76,10 @@ export default {
     padding: 0 5px;
 }
 
+.cells-container::-webkit-scrollbar {
+    display: none;
+}
+
 .tip-text {
     font-size: 14px;
     color: #909ca4;
