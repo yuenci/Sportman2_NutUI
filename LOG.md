@@ -23,6 +23,10 @@ https://learn.microsoft.com/zh-cn/azure/cognitive-services/speech-service/get-st
 
 https://learn.microsoft.com/zh-cn/azure/cognitive-services/speech-service/get-started-text-to-speech?tabs=windows%2Cterminal&pivots=programming-language-rest
 
+SSML （控制发音要素）
+
+https://learn.microsoft.com/zh-cn/azure/cognitive-services/speech-service/speech-synthesis-markup
+
 # MediaRecorder
 
 document: https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
