@@ -14,6 +14,7 @@
 import StatusContainer from '../statusContainer.js';
 import { Search2 } from '@nutui/icons-vue';
 import CardsContainer from './CardsContainer.vue';
+import PubSub from 'pubsub-js';
 
 
 export default {
@@ -73,7 +74,11 @@ export default {
                 return newData;
             }
 
-        }
+        },
+        gotARandomWord() {
+            let randomWord = this.words[Math.floor(Math.random() * this.words.length)][2];
+            return randomWord;
+        },
     },
     setup() {
         function tabSwitch(item, index) {
@@ -105,6 +110,11 @@ export default {
                 this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
             }
         });
+        PubSub.subscribe('randomWord', (msg, data) => {
+            let randomWord = this.gotARandomWord();
+            // console.log(randomWord + " is a random word");
+            this.$router.push({ path: `/learning/${randomWord}` });
+        });
     },
     beforeDestroy() {
         window.removeEventListener('scroll', () => {
@@ -113,6 +123,7 @@ export default {
                 this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
             }
         });
+        PubSub.unsubscribe('randomWord');
     }
 
 }

@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="cells-container">
+    <div class="cells-container" :key="$route.fullPath" >
         <nut-cell>
             <nut-row>
                 <nut-col :span="12">
