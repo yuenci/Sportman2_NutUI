@@ -35,10 +35,9 @@ export default {
     methods: {
         addWord() {
             let url = "http://127.0.0.1:4999"
-            console.log(this.word, this.explain, this.learnerExample, this.dictoryExample);
+            //console.log(this.word, this.explain, this.learnerExample, this.dictoryExample);
             // ues fetch send post request
-            if (!this.valid()) return;
-            fetch(`${url}/word`, {
+            let options = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,11 +45,16 @@ export default {
                 body: JSON.stringify({
                     word: this.word,
                     explain: this.explain,
-                    learnerExample: this.learnerExample,
-                    dictoryExample: this.dictoryExample,
+                    learnerExample: this.learnerExample.split('\n'),
+                    dictoryExample: this.dictoryExample.split('\n'),
                 }),
-            })
-                .then((res) => res.json())
+            }
+            if (!this.valid()) return;
+            fetch(`${url}/word`, options)
+                .then((res) => {
+                    res.json();
+                    showNotify.success('Add word success');
+                })
                 .then((res) => {
                     console.log(res);
                 });

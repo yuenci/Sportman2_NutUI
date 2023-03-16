@@ -49,7 +49,7 @@ import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog } from '@nutui/nutui';
-import { ref, createVNode } from 'vue';
+import { showNotify } from '@nutui/nutui';
 
 export default {
     components: {
