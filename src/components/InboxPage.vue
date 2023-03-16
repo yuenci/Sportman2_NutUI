@@ -22,6 +22,7 @@
 </template>
 <script>
 import { showNotify } from '@nutui/nutui';
+import { url } from '../config';
 
 export default {
     data() {
@@ -34,7 +35,6 @@ export default {
     },
     methods: {
         addWord() {
-            let url = "http://127.0.0.1:4999"
             //console.log(this.word, this.explain, this.learnerExample, this.dictoryExample);
             // ues fetch send post request
             let options = {

@@ -55,6 +55,7 @@ export default {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
         if (Object.keys(StatusContainer.getWords).length === 0) {
             StatusContainer.fetchWords().then((data) => {
+                console.log(data);
                 this.explaination = data[this.word].explain;
                 this.getExplanation();
             });

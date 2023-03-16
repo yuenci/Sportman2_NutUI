@@ -1,3 +1,4 @@
+import { url } from "./config";
 export default class StatusContainer {
     static getWords = {};
     static getWordsArray = [];
@@ -5,10 +6,11 @@ export default class StatusContainer {
     static startTimeStamp = 0;
     static fetchWords() {
         return new Promise((resolve, reject) => {
-            fetch('/output.json')
+            fetch(url + '/words')
                 .then(response => response.json())
                 .then(data => {
-                    StatusContainer.getWords = data;
+                    let dictData = StatusContainer.arrayToDict(data.allWords);
+                    StatusContainer.getWords = dictData;
                     resolve(data);
                 });
         });
@@ -16,11 +18,12 @@ export default class StatusContainer {
 
     static fetchWordsArray() {
         return new Promise((resolve, reject) => {
-            fetch('/output.json')
+            fetch(url + '/words')
                 .then(response => response.json())
                 .then(data => {
                     //console.log(data);
-                    let arrayData = StatusContainer.dictToArray(data);
+
+                    let arrayData = StatusContainer.dictToArray(data.allWords);
                     StatusContainer.getWordsArray = arrayData;
                     resolve(arrayData);
                 });
@@ -33,6 +36,15 @@ export default class StatusContainer {
             arr.push([dict[key].word, dict[key].explain, dict[key].learner_example]);
         }
         return arr;
+    }
+
+    static arrayToDict(arr) {
+        let dict = {};
+        for (let i = 0; i < arr.length; i++) {
+            let currentWordObj = arr[i];
+            dict[currentWordObj.word] = currentWordObj;
+        }
+        return dict;
     }
 
 
