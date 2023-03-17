@@ -9,6 +9,7 @@ export default class StatusContainer {
             fetch(url + '/words')
                 .then(response => response.json())
                 .then(data => {
+                    //console.log(data);
                     let dictData = StatusContainer.arrayToDict(data.allWords);
                     StatusContainer.getWords = dictData;
                     resolve(data);

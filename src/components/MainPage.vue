@@ -47,6 +47,7 @@ export default {
             this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         },
         cardDisplay(data) {
+            //console.log(data);
             let settingsLocal = localStorage.getItem("settings");
             let cardDisplayMode = "";
             if (settingsLocal) {
@@ -63,6 +64,7 @@ export default {
             }
             else if (cardDisplayMode === "2") {
                 let newData = data.map((item) => {
+                    if (item[2] === undefined) return;
                     return [item[2][0], item[0], item[0]];
                 });
                 return newData;
