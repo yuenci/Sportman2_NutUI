@@ -16,3 +16,7 @@
 # deploy
 
 $ firebase deploy --only hosting
+
+```
+firebase deploy --onl
+```
