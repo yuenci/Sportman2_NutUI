@@ -7,6 +7,7 @@
         </nut-searchbar>
 
         <CardsContainer :words="visibleWords"></CardsContainer>
+        <div class="bottom-space"></div>
     </div>
 </template>
 
@@ -15,6 +16,7 @@ import StatusContainer from '../statusContainer.js';
 import { Search2 } from '@nutui/icons-vue';
 import CardsContainer from './CardsContainer.vue';
 import PubSub from 'pubsub-js';
+import { getSettings } from '../Tools';
 
 
 export default {
@@ -46,11 +48,15 @@ export default {
             this.searchValue = "";
             this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         },
-        cardDisplay(data) {
+        async cardDisplay(data) {
             // 3 - explain
             // 2 word
 
             let cardDisplayMode = StatusContainer.settingsCache.cardDisplayMode;
+            if (!StatusContainer.settingsCache) {
+                cardDisplayMode = await getSettings().cardDisplayMode;
+            }
+
             if (cardDisplayMode === "1") {
                 let newData = data.map((item) => {
                     return [item[0], item[1], item[0]];
@@ -75,6 +81,23 @@ export default {
             let randomWord = this.words[Math.floor(Math.random() * this.words.length)][2];
             return randomWord;
         },
+        async loadAllData() {
+            if (!StatusContainer.getWordsArray) {
+                let data = await StatusContainer.fetchWordsArray();
+                this.words = await this.cardDisplay(data);
+                this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
+            } else {
+                this.words = await this.cardDisplay(StatusContainer.getWordsArray);
+                this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
+            }
+            //console.log(this.visibleWords);
+        },
+        async loadTodaysPlan() {
+            //console.log(StatusContainer.todaysPlanArray);
+
+            this.words = await this.cardDisplay(StatusContainer.todaysPlanArray);
+            this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
+        }
     },
     setup() {
         function tabSwitch(item, index) {
@@ -86,11 +109,12 @@ export default {
     },
 
     // after the component is created, the following code will be executed
-    created() {
-        StatusContainer.fetchWordsArray().then((data) => {
-            this.words = this.cardDisplay(data);
-            this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
-        });
+    async created() {
+        if (StatusContainer.startTodaysPlan) {
+            this.loadTodaysPlan();
+        } else {
+            this.loadAllData();
+        }
     },
     mounted() {
         // Infinite scrolling
@@ -105,8 +129,17 @@ export default {
             // console.log(randomWord + " is a random word");
             this.$router.push({ path: `/learning/${randomWord}` });
         });
+        PubSub.subscribe('todaysPlan', (msg, data) => {
+            console.log(data.message);
+            if (data.message === "start") {
+                this.loadTodaysPlan();
+            } else if (data.message === "stop") {
+                this.loadAllData();
+            }
+        });
     },
-    beforeDestroy() {
+
+    beforeUnmount() {
         window.removeEventListener('scroll', () => {
             if (document.body.offsetHeight - window.scrollY < 700) {
                 this.visibleWordsIndex += this.visibleWordsCount;
@@ -114,6 +147,7 @@ export default {
             }
         });
         PubSub.unsubscribe('randomWord');
+        PubSub.unsubscribe('todaysPlan');
     }
 
 }
@@ -127,5 +161,9 @@ export default {
 .main-page {
     width: 100%;
     height: 60%;
+}
+
+.bottom-space {
+    height: 50px;
 }
 </style>

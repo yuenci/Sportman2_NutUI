@@ -231,7 +231,7 @@ export default {
         window.addEventListener('touchmove', this.onTouchMove, { passive: false });
         window.addEventListener('touchend', this.onTouchEnd, { passive: false });
     },
-    beforeDestroy() {
+    beforeUnmount() {
         document.removeEventListener("touchend", this.toastMenuShow, false);
         document.removeEventListener('touchstart', this.onTouchStart, false);
         document.removeEventListener('touchmove', this.onTouchMove, false);

@@ -30,9 +30,7 @@
 
                 <!-- <nut-tag  v-if="show" closeable @close="close" type="primary">标签</nut-tag> -->
 
-                <nut-cell>
-                    <nut-input v-model="currentTag" placeholder="Type a tag" @keyup.enter="addTag" />
-                </nut-cell>
+                <nut-input v-model="currentTag" placeholder="Type a tag" @keyup.enter="addTag" />
             </nut-cell-group>
         </div>
         <nut-button block type="primary" class="enter-btn" @click="addWord">Yes !</nut-button>

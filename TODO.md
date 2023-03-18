@@ -18,7 +18,7 @@
 * [X] search disable sometimes
 * [X] add report bug in settings
 * [X] 时间记录
-* [ ] schudule模式
-* [ ] 添加时增加tag的输入
+* [X] schudule模式
+* [X] 添加时增加tag的输入
 * [ ] check if word already exist before add new word
 * [ ] 自动检测有问题的卡片

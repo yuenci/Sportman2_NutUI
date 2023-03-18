@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import { url } from './config.js'
 import StatusContainer from './statusContainer.js';
 import FBStore from './storeHandler.js';
@@ -44,5 +45,37 @@ async function submitBug(data) {
     return res;
 }
 
-export { logLearingTime, getDuration, getSettings, setSetting, submitBug }
+function getTodayDate() {
+    // get 20220318
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    return year + "" + month + "" + day;
+}
+
+async function getTodaysPlan() {
+    let dailyWordsNum = StatusContainer.settingsCache.dailyWordsNum;
+    let response = await fetch(url + '/plan?num=' + dailyWordsNum)
+    let json = await response.json()
+
+    let planKeys = Object.keys(json.plan);
+    let todaysPlan = [];
+    for (let word of StatusContainer.getWordsArray) {
+        if (planKeys.includes(word[3])) {
+            todaysPlan.push(word);
+        }
+    }
+    StatusContainer.todaysPlanArray = todaysPlan;
+    // console.log(todaysPlan);
+    return todaysPlan;
+}
+
+export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan }
 

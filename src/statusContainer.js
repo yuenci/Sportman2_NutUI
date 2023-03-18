@@ -6,6 +6,8 @@ export default class StatusContainer {
     static startTimeStamp = 0;
     static wordStartTimeStamp = 0;
     static settingsCache = null;
+    static todaysPlanArray = null;
+    static startTodaysPlan = false;
 
     static fetchWords() {
         return new Promise((resolve, reject) => {
@@ -47,7 +49,7 @@ export default class StatusContainer {
     static dictToArray(dict) {
         let arr = [];
         for (let key in dict) {
-            arr.push([dict[key].word, dict[key].explain, dict[key].learner_example]);
+            arr.push([dict[key].word, dict[key].explain, dict[key].learner_example, dict[key]._id]);
         }
         return arr;
     }
