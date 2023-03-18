@@ -13,7 +13,7 @@
 * [ ] add timestamp for each word
 * [ ] 添加网站图标icon
 * [ ] slide to change
-* [ ] fix sentence mode下，random wrongly
+* [X] fix sentence mode，random wrongly
 * [ ] fix example not working
 * [ ] search disable sometimes
 * [ ] add report bug in settings

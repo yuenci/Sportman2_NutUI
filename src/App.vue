@@ -19,17 +19,14 @@ export default {
       startTimeStamp: 0,
     }
   },
-  created() {
-    // StatusContainer.fetchWords();
-  },
-  mounted() {
-    window.addEventListener('beforeunload', this.handleBeforeUnload)
-    this.startTimeStamp = new Date().getTime();
-    console.log("start time: " + this.startTimeStamp);
-  },
-  beforeDestroy() {
-    window.removeEventListener('beforeunload', this.handleBeforeUnload)
-  },
+  // mounted() {
+  //   window.addEventListener('beforeunload', this.handleBeforeUnload)
+  //   this.startTimeStamp = new Date().getTime();
+  //   console.log("start time: " + this.startTimeStamp);
+  // },
+  // beforeDestroy() {
+  //   window.removeEventListener('beforeunload', this.handleBeforeUnload)
+  // },
   methods: {
     handleBeforeUnload(event) {
       if (this.unsavedChanges) {

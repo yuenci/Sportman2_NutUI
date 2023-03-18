@@ -1,11 +1,16 @@
 import { url } from "./config";
 export default class StatusContainer {
-    static getWords = {};
-    static getWordsArray = [];
+    static getWords = null;
+    static getWordsArray = null;
     static currentWord = '';
     static startTimeStamp = 0;
+    static wordStartTimeStamp = 0;
     static fetchWords() {
         return new Promise((resolve, reject) => {
+            if (StatusContainer.getWords) {
+                resolve(StatusContainer.getWords);
+            }
+
             fetch(url + '/words')
                 .then(response => response.json())
                 .then(data => {
@@ -13,20 +18,26 @@ export default class StatusContainer {
                     let dictData = StatusContainer.arrayToDict(data.allWords);
                     StatusContainer.getWords = dictData;
                     resolve(data);
+                }).catch(err => {
+                    console.log(err);
                 });
         });
     }
 
     static fetchWordsArray() {
         return new Promise((resolve, reject) => {
+            if (StatusContainer.getWordsArray) {
+                resolve(StatusContainer.getWordsArray);
+            }
             fetch(url + '/words')
                 .then(response => response.json())
                 .then(data => {
                     //console.log(data);
-
                     let arrayData = StatusContainer.dictToArray(data.allWords);
                     StatusContainer.getWordsArray = arrayData;
                     resolve(arrayData);
+                }).catch(err => {
+                    console.log(err);
                 });
         });
     }
