@@ -27,8 +27,9 @@ export default {
             getDuration()
                 .then((data) => {
                     let num = data.total_duration; // milliseconds
+                    let minute = Math.floor(num / 60000);
                     let hour = Math.floor(num / 3600000);
-                    this.customNumber = num;
+                    this.customNumber = minute;
                 }).catch((err) => {
                     console.log(err);
                 });

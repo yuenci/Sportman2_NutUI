@@ -99,12 +99,12 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    /* display: flex;
+/* .container {
+    display: flex;
     justify-content: center;
-    align-items: center; */
-    /* height: 100%; */
-}
+    align-items: center;
+    height: 100%;
+} */
 
 .audio-tag {
     display: none;

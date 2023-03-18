@@ -126,7 +126,7 @@ export default {
         });
         PubSub.subscribe('randomWord', (msg, data) => {
             let randomWord = this.gotARandomWord();
-            // console.log(randomWord + " is a random word");
+            //console.log(randomWord + " is a random word");
             this.$router.push({ path: `/learning/${randomWord}` });
         });
         PubSub.subscribe('todaysPlan', (msg, data) => {
@@ -139,7 +139,7 @@ export default {
         });
     },
 
-    beforeUnmount() {
+    beforeDestroy() {
         window.removeEventListener('scroll', () => {
             if (document.body.offsetHeight - window.scrollY < 700) {
                 this.visibleWordsIndex += this.visibleWordsCount;
@@ -148,7 +148,7 @@ export default {
         });
         PubSub.unsubscribe('randomWord');
         PubSub.unsubscribe('todaysPlan');
-    }
+    },
 
 }
 </script>

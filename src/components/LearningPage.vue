@@ -176,16 +176,18 @@ export default {
                 });
             }
         },
-        finishLearning() {
+        async finishLearning() {
             let id = localStorage.getItem("currentWordID");
             //console.log(id);
 
-            logLearingTime(id, this.setTimeEnd()).then(
-                (data) => {
-                    console.log(data);
-                }
-            )
-            this.setTimeEnd();
+            if (this.startTimeStamp !== null) {
+                let data = await logLearingTime(id, this.setTimeEnd())
+                console.log(data);
+
+                //#TODO  update plan
+            }
+
+
             PubSub.publish('randomWord', { message: 'you message here' });
         },
         setTimeStart() {
@@ -194,6 +196,7 @@ export default {
         setTimeEnd() {
             let endTimeStamp = new Date().getTime();
             let time = (endTimeStamp - this.startTimeStamp) //milisecond
+            this.startTimeStamp = null;
             return time;
         },
         onTouchStart(e) {
