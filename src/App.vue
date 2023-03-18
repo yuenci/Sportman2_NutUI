@@ -19,6 +19,9 @@ export default {
       startTimeStamp: 0,
     }
   },
+  mounted() {
+
+  },
   // mounted() {
   //   window.addEventListener('beforeunload', this.handleBeforeUnload)
   //   this.startTimeStamp = new Date().getTime();

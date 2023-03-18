@@ -9,14 +9,10 @@
 * [X] feat: add tab items: setting  and inbox
 * [X] feat: random method
 * [ ] feat: SRS method
-* [ ] feat: move data & settings to cloud
-* [ ] feat: admin page for manage words
+* [X] feat: move data & settings to cloud
+* [X] feat: admin page for manage words
 * [ ] fix: change all to Britain accent
 
 # deploy
 
 $ firebase deploy --only hosting
-
-```
-firebase deploy --onl
-```

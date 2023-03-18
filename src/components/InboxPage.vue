@@ -83,7 +83,9 @@ export default {
 .cells-container::-webkit-scrollbar {
     display: none;
 }
+</style>
 
+<style>
 .tip-text {
     font-size: 14px;
     color: #909ca4;

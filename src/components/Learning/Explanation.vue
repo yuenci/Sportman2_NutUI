@@ -57,6 +57,9 @@ export default {
         if (StatusContainer.getWords === null) {
             StatusContainer.fetchWords().then((data) => {
                 cuerrentWordData = data[this.word];
+                if (cuerrentWordData === undefined) {
+                    cuerrentWordData = data[this.word];
+                }
                 this.explaination = cuerrentWordData.explain;
                 this.getExplanation();
             });

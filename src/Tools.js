@@ -1,5 +1,7 @@
 import { url } from './config.js'
+import FBStore from './storeHandler.js';
 
+const fbStore = new FBStore();
 
 async function logLearingTime(id, time) {
     let options = {
@@ -19,6 +21,22 @@ async function logLearingTime(id, time) {
     return json
 }
 
+async function getDuration() {
+    let response = await fetch(url + '/duration')
+    let json = await response.json()
+    return json
+}
 
-export { logLearingTime }
+async function getSettings() {
+    const res = await fbStore.readDocument("data", "settings");
+    return res;
+}
+
+async function setSetting(data) {
+    const res = await fbStore.update("data", data, "settings");
+    return res;
+}
+
+
+export { logLearingTime, getDuration, getSettings, setSetting }
 

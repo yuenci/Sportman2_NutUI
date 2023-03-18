@@ -7,10 +7,10 @@
 * [X] feat: add tab items: setting  and inbox
 * [X] feat: random method
 * [ ] feat: SRS method
-* [ ] feat: move data & settings to cloud
-* [ ] feat: admin page for manage words
+* [X] feat: move data & settings to cloud
+* [X] feat: admin page for manage words
 * [ ] fix: change all to Britain accent
-* [ ] add timestamp for each word
+* [X] add timestamp for each word
 * [ ] 添加网站图标icon
 * [ ] slide to change
 * [X] fix sentence mode，random wrongly
@@ -21,3 +21,4 @@
 * [ ] schudule模式
 * [ ] 添加时增加tag的输入
 * [ ] check if word already exist before add new word
+* [ ] 自动检测有问题的卡片
