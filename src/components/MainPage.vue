@@ -47,15 +47,10 @@ export default {
             this.visibleWords = this.words.slice(0, this.visibleWordsIndex);
         },
         cardDisplay(data) {
-            //console.log(data);
-            let settingsLocal = localStorage.getItem("settings");
-            let cardDisplayMode = "";
-            if (settingsLocal) {
-                cardDisplayMode = JSON.parse(settingsLocal).cardDisplayMode;
-            }
-            else {
-                return data;
-            }
+            // 3 - explain
+            // 2 word
+
+            let cardDisplayMode = StatusContainer.settingsCache.cardDisplayMode;
             if (cardDisplayMode === "1") {
                 let newData = data.map((item) => {
                     return [item[0], item[1], item[0]];
@@ -75,7 +70,6 @@ export default {
                 });
                 return newData;
             }
-
         },
         gotARandomWord() {
             let randomWord = this.words[Math.floor(Math.random() * this.words.length)][2];

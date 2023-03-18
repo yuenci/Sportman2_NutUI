@@ -14,7 +14,7 @@
             <nut-cell-group>
                 <div class="tip-text settings-text">Daily Words</div>
                 <nut-cell>
-                    <nut-input-number v-model="dailyWordsNum" />
+                    <nut-input-number v-model="dailyWordsNum" @change="dailyWordsNumChangeHandler" />
                 </nut-cell>
             </nut-cell-group>
         </div>
@@ -22,17 +22,19 @@
             <div class="tip-text settings-text">Report Bug</div>
             <nut-textarea v-model="bugText" :rows="5" autosize limit-show max-length="140"
                 placeholder="Enter bug description" />
-            <nut-button size="small" type="primary" color="blue" class="bug-btn" v-show="bugText">Submit</nut-button>
+            <nut-button size="small" type="primary" color="blue" class="bug-btn" v-show="bugText"
+                @click="reportBugs">Submit</nut-button>
         </div>
     </div>
 </template>
 <script>
 import StatusContainer from "../statusContainer.js"
-import { getSettings, setSetting } from "../Tools";
+import { getSettings, setSetting, submitBug } from "../Tools";
+import { showNotify } from '@nutui/nutui';
 export default {
     data() {
         return {
-            cardDisplayMode: "1",
+            cardDisplayMode: "",
             dailyWordsNum: 0,
             bugText: "",
         }
@@ -40,20 +42,42 @@ export default {
     mounted() {
         getSettings().then((settings) => {
             this.cardDisplayMode = String(settings.cardDisplayMode);
+            this.dailyWordsNum = settings.dailyWordsNum;
         });
     },
     methods: {
-        show() {
-            console.log(this.settings);
-        },
 
         displayModechangeHandler(value) {
-            console.log(value);
+            //console.log(value);
             let settings = {
                 cardDisplayMode: value,
             };
             setSetting(settings).then(() => {
-                console.log("set settings success");
+                //console.log("set settings success");
+                getSettings();
+            });
+        },
+
+        dailyWordsNumChangeHandler(value) {
+            let settings = {
+                dailyWordsNum: value,
+            };
+            setSetting(settings).then(() => {
+                getSettings();
+            });
+        },
+        reportBugs() {
+            console.log(this.bugText);
+            let data = {
+                content: this.bugText,
+                status: 0,
+                time: new Date(),
+            }
+
+            submitBug(data).then((res) => {
+                console.log(res);
+                showNotify.success('Bug report submitted successfully');
+                this.bugText = "";
             });
         }
     }

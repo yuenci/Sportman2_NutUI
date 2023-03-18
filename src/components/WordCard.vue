@@ -9,6 +9,7 @@
 </template>
 <script>
 import PubSub from 'pubsub-js';
+import StatusContainer from '../statusContainer.js';
 
 export default {
     props: {
@@ -33,15 +34,8 @@ export default {
         }
     },
     mounted() {
-        let settingsLocal = localStorage.getItem("settings");
-        let cardDisplayMode = "";
-        if (!settingsLocal) {
-            this.wordCopy = this.word;
-            return;
-        }
-        else {
-            cardDisplayMode = JSON.parse(settingsLocal).cardDisplayMode;
-        }
+        let cardDisplayMode = StatusContainer.settingsCache.cardDisplayMode;
+
 
         if (cardDisplayMode === "2") {
             this.wordCopy = this.boldWord(this.word, this.vocabulary);

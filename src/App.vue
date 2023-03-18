@@ -9,6 +9,8 @@
 <script >
 import FootBar from './components/FootBar.vue';
 import TopBar from './components/TopBar.vue';
+import StatusContainer from './statusContainer.js';
+import { getSettings } from './Tools';
 export default {
   components: {
     FootBar, TopBar
@@ -20,7 +22,8 @@ export default {
     }
   },
   mounted() {
-
+    StatusContainer.fetchWords();
+    getSettings();
   },
   // mounted() {
   //   window.addEventListener('beforeunload', this.handleBeforeUnload)

@@ -5,6 +5,8 @@ export default class StatusContainer {
     static currentWord = '';
     static startTimeStamp = 0;
     static wordStartTimeStamp = 0;
+    static settingsCache = null;
+
     static fetchWords() {
         return new Promise((resolve, reject) => {
             if (StatusContainer.getWords) {
@@ -63,4 +65,5 @@ export default class StatusContainer {
     static defaultSetting = {
         cardDisplayMode: 1,
     };
+
 }

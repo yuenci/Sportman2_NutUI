@@ -1,4 +1,5 @@
 import { url } from './config.js'
+import StatusContainer from './statusContainer.js';
 import FBStore from './storeHandler.js';
 
 const fbStore = new FBStore();
@@ -29,6 +30,7 @@ async function getDuration() {
 
 async function getSettings() {
     const res = await fbStore.readDocument("data", "settings");
+    StatusContainer.settingsCache = res;
     return res;
 }
 
@@ -37,6 +39,10 @@ async function setSetting(data) {
     return res;
 }
 
+async function submitBug(data) {
+    const res = await fbStore.write("bugs", data);
+    return res;
+}
 
-export { logLearingTime, getDuration, getSettings, setSetting }
+export { logLearingTime, getDuration, getSettings, setSetting, submitBug }
 

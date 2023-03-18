@@ -16,7 +16,7 @@
 * [X] fix sentence mode，random wrongly
 * [ ] fix example not working
 * [ ] search disable sometimes
-* [ ] add report bug in settings
+* [X] add report bug in settings
 * [X] 时间记录
 * [ ] schudule模式
 * [ ] 添加时增加tag的输入

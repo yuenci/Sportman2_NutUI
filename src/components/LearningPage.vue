@@ -74,6 +74,9 @@ export default {
             className: "",
             CheckClass: "hide",
             startTimeStamp: 0,
+            startX: 0,
+            startY: 0,
+            direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
         }
     },
     computed: {
@@ -192,12 +195,48 @@ export default {
             let endTimeStamp = new Date().getTime();
             let time = (endTimeStamp - this.startTimeStamp) //milisecond
             return time;
-        }
+        },
+        onTouchStart(e) {
+            // 记录起始位置
+            this.startX = e.touches[0].pageX;
+            this.startY = e.touches[0].pageY;
+        },
+        onTouchMove(e) {
+            // 计算手指移动距离
+            const deltaX = e.touches[0].pageX - this.startX;
+            const deltaY = e.touches[0].pageY - this.startY;
+            // 判断是否为左右滑动
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // 阻止页面滚动
+                e.preventDefault();
+                // 判断方向，左滑为负数，右滑为正数
+                this.direction = deltaX > 0 ? 1 : -1;
+            }
+        },
+        onTouchEnd(e) {
+            //console.log(this.direction);
+            // 手指离开屏幕后重置方向
+            if (this.direction < 0) {
+                this.changePage('next');
+            } else if (this.direction > 0) {
+                this.changePage('prev');
+            }
+            this.direction = 0;
+        },
     },
     mounted() {
         document.onmouseup = this.toastMenuShow;
         document.addEventListener("touchend", this.toastMenuShow, false);
-    }
+        window.addEventListener('touchstart', this.onTouchStart, { passive: false });
+        window.addEventListener('touchmove', this.onTouchMove, { passive: false });
+        window.addEventListener('touchend', this.onTouchEnd, { passive: false });
+    },
+    beforeDestroy() {
+        document.removeEventListener("touchend", this.toastMenuShow, false);
+        document.removeEventListener('touchstart', this.onTouchStart, false);
+        document.removeEventListener('touchmove', this.onTouchMove, false);
+        document.removeEventListener('touchend', this.onTouchEnd, false);
+    },
 }
 </script>
 <style scoped>
