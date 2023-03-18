@@ -31,16 +31,21 @@
                      <RectLeft />
                 </template>
             </nut-button>
-            <nut-button type="info" size="mini" :disabled="disabledRight" @click="changePage('next')">
+            <nut-button type="info" size="mini" :disabled="disabledRight" @click="changePage('next')" :class="className">
                 <template #icon>
                     <RectRight />
+                </template>
+            </nut-button>
+            <nut-button type="info" size="mini" color="green"  @click="finishLearning" :class="CheckClass">
+                <template #icon>
+                    <Check />
                 </template>
             </nut-button>
         </div>
     </div>
 </template>
 <script>
-import { RectLeft, RectRight } from '@nutui/icons-vue';
+import { RectLeft, RectRight, Check } from '@nutui/icons-vue';
 import Explanation from './Learning/Explanation.vue';
 import Example from './Learning/Example.vue';
 import Reading from './Learning/Reading.vue';
@@ -50,10 +55,11 @@ import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog } from '@nutui/nutui';
 import { showNotify } from '@nutui/nutui';
+import { logLearingTime } from '../Tools';
 
 export default {
     components: {
-        RectLeft, RectRight,
+        RectLeft, RectRight, Check,
         Explanation, Example,
         Reading, Writing, Listening, Speaking
     },
@@ -65,6 +71,9 @@ export default {
             disabledLeft: true,
             disabledRight: false,
             textSeleted: "",
+            className: "",
+            CheckClass: "hide",
+            startTimeStamp: 0,
         }
     },
     computed: {
@@ -77,10 +86,20 @@ export default {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
         StatusContainer.currentWord = this.word;
         localStorage.setItem("currentWord", this.word);
+        this.setTimeStart();
     },
     watch: {
         $route(to, from) {
             this.currentPage = 0;
+            this.setTimeStart();
+        },
+        currentPage(newValue, oldValue) {
+            if (newValue === 0) {
+                this.CheckClass = "hide";
+                this.className = ""
+                this.disabledLeft = true;
+                this.disabledRight = false;
+            }
         }
     },
     methods: {
@@ -95,7 +114,11 @@ export default {
             }
 
             this.disabledLeft = this.currentPage === 0;
-            this.disabledRight = this.currentPage === this.pageSize - 1;
+            if (this.currentPage === this.pageSize - 1) {
+                this.disabledRight = true;
+                this.className = "hide";
+                this.CheckClass = "";
+            }
         },
         showWordDialog(definition, example) {
             const onCancel = () => {
@@ -149,6 +172,26 @@ export default {
                     this.showWordDialog(data[0], data[1]);
                 });
             }
+        },
+        finishLearning() {
+            let id = localStorage.getItem("currentWordID");
+            //console.log(id);
+
+            logLearingTime(id, this.setTimeEnd()).then(
+                (data) => {
+                    console.log(data);
+                }
+            )
+            this.setTimeEnd();
+            PubSub.publish('randomWord', { message: 'you message here' });
+        },
+        setTimeStart() {
+            this.startTimeStamp = new Date().getTime();
+        },
+        setTimeEnd() {
+            let endTimeStamp = new Date().getTime();
+            let time = (endTimeStamp - this.startTimeStamp) //milisecond
+            return time;
         }
     },
     mounted() {
@@ -181,5 +224,9 @@ export default {
     text-align: left !important;
     word-break: break-all !important;
 
+}
+
+.hide {
+    display: none;
 }
 </style>

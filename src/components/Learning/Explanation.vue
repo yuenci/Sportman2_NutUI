@@ -53,15 +53,21 @@ export default {
 
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
+        let cuerrentWordData;
         if (StatusContainer.getWords === null) {
             StatusContainer.fetchWords().then((data) => {
-                //console.log(data);
-                this.explaination = data[this.word].explain;
+                cuerrentWordData = data[this.word];
+                this.explaination = cuerrentWordData.explain;
                 this.getExplanation();
             });
         } else {
-            this.explaination = StatusContainer.getWords[this.word].explain;
+            cuerrentWordData = StatusContainer.getWords[this.word];
+            this.explaination = cuerrentWordData.explain;
             this.getExplanation();
+        }
+        //console.log(cuerrentWordData);
+        if (cuerrentWordData !== undefined) {
+            localStorage.setItem("currentWordID", cuerrentWordData._id);
         }
     },
 

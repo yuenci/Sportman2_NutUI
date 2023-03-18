@@ -17,6 +17,7 @@
 * [ ] fix example not working
 * [ ] search disable sometimes
 * [ ] add report bug in settings
-* [ ] 时间记录
+* [X] 时间记录
 * [ ] schudule模式
 * [ ] 添加时增加tag的输入
+* [ ] check if word already exist before add new word
