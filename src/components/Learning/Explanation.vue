@@ -60,6 +60,7 @@ export default {
                 if (cuerrentWordData === undefined) {
                     cuerrentWordData = data[this.word];
                 }
+                if (cuerrentWordData === undefined) return;
                 this.explaination = cuerrentWordData.explain;
                 this.getExplanation();
             });

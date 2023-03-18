@@ -77,5 +77,11 @@ async function getTodaysPlan() {
     return todaysPlan;
 }
 
-export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan }
+async function getRenRen(word) {
+    let response = await fetch(url + '/renren' + '?word=' + word);
+    let json = await response.json()
+    return json.res;
+}
+
+export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen }
 

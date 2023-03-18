@@ -21,4 +21,8 @@
 * [X] schudule模式
 * [X] 添加时增加tag的输入
 * [ ] check if word already exist before add new word
+* [ ] 获取人人的资源
 * [ ] 自动检测有问题的卡片
+* [ ] bug 收集处理
+* [ ] 执行爬虫，把影音资源爬取到自己的服务器
+* [ ] 把每次writing的内容都存下来
