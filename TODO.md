@@ -12,10 +12,10 @@
 * [ ] fix: change all to Britain accent
 * [X] add timestamp for each word
 * [ ] 添加网站图标icon
-* [ ] slide to change
+* [X] slide to change
 * [X] fix sentence mode，random wrongly
-* [ ] fix example not working
-* [ ] search disable sometimes
+* [X] fix example not working
+* [X] search disable sometimes
 * [X] add report bug in settings
 * [X] 时间记录
 * [ ] schudule模式

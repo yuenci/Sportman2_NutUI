@@ -1,27 +1,47 @@
-<template lang="">
+<template>
     <div class="cells-container">
         <div class="input-cell">
             <div class="tip-text">Word</div>
-            <nut-input  v-model="word"  placeholder="Type a word" />
+            <nut-input v-model="word" placeholder="Type a word" />
         </div>
-         <div class="input-cell">
+        <div class="input-cell">
             <div class="tip-text">Explain</div>
-             <nut-textarea v-model="explain" :rows="5" autosize limit-show max-length="140" placeholder="Enter the explain" />
+            <nut-textarea v-model="explain" :rows="5" autosize limit-show max-length="140"
+                placeholder="Enter the explain" />
         </div>
-         <div class="input-cell">
+        <div class="input-cell">
             <div class="tip-text">Learner example</div>
-            <nut-textarea v-model="learnerExample" :rows="5" autosize limit-show max-length="140" placeholder="Enter the Learner example" />
+            <nut-textarea v-model="learnerExample" :rows="5" autosize limit-show max-length="140"
+                placeholder="Enter the Learner example" />
         </div>
-         <div class="input-cell">
+        <div class="input-cell">
             <div class="tip-text">Dictory example</div>
-            <nut-textarea v-model="dictoryExample" :rows="5" autosize limit-show max-length="140"  placeholder="Enter the Dictory example" />
+            <nut-textarea v-model="dictoryExample" :rows="5" autosize limit-show max-length="140"
+                placeholder="Enter the Dictory example" />
+        </div>
+        <div class="input-cell">
+            <div class="tip-text">Tags</div>
+            <nut-cell-group>
+                <div class="tag-con">
+                    <nut-tag v-for="tag in tags" :key="tag" closeable @close="removeTag" type="primary" class="tag">{{ tag
+                    }}</nut-tag>
+
+                </div>
+
+                <!-- <nut-tag  v-if="show" closeable @close="close" type="primary">标签</nut-tag> -->
+
+                <nut-cell>
+                    <nut-input v-model="currentTag" placeholder="Type a tag" @keyup.enter="addTag" />
+                </nut-cell>
+            </nut-cell-group>
         </div>
         <nut-button block type="primary" class="enter-btn" @click="addWord">Yes !</nut-button>
+
     </div>
-    
 </template>
 <script>
 import { showNotify } from '@nutui/nutui';
+import { remove } from '@vue/shared';
 import { url } from '../config';
 
 export default {
@@ -31,6 +51,9 @@ export default {
             explain: '',
             learnerExample: '',
             dictoryExample: '',
+            currentTag: '',
+            tags: [],
+            show: true,
         }
     },
     methods: {
@@ -47,6 +70,7 @@ export default {
                     explain: this.explain,
                     learnerExample: this.learnerExample.split('\n'),
                     dictoryExample: this.dictoryExample.split('\n'),
+                    tags: this.tags,
                 }),
             }
             if (!this.valid()) return;
@@ -66,6 +90,25 @@ export default {
                 return false;
             }
             return true;
+        },
+        close() {
+            this.show = false;
+        },
+        addTag() {
+            if (this.currentTag === '') return;
+
+            if (this.tags.includes(this.currentTag)) {
+                showNotify.warn(`tag ${this.currentTag} is already exist`);
+                return;
+            }
+
+            this.tags.push(this.currentTag);
+            this.currentTag = '';
+        },
+        removeTag(event) {
+            let val = event.target.parentNode.innerText;
+            let newTags = this.tags.filter((tag) => tag !== val);
+            this.tags = newTags;
         }
     },
 };
@@ -94,5 +137,14 @@ export default {
 
 .input-cell {
     margin-bottom: 30px;
+}
+
+.tag {
+    margin: 0 3px;
+}
+
+.tag-con {
+    min-height: 21px;
+    margin: 0 28px;
 }
 </style>
