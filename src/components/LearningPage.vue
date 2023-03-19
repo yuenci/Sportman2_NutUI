@@ -201,9 +201,16 @@ export default {
 
                 //#TODO  update plan
             }
+            //;
+            //console.log(StatusContainer.ifMainPageCreated);
+            let currentURL = this.$route.path;
 
-
-            PubSub.publish('randomWord', { message: 'you message here' });
+            PubSub.publish('randomWord', { message: 'you message here' })
+            // get current url
+            setTimeout(() => {
+                if (this.$route.path === currentURL)
+                    this.$router.push("/words");
+            }, 1);
         },
         setTimeStart() {
             this.startTimeStamp = new Date().getTime();

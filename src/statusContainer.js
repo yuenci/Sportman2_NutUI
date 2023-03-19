@@ -9,6 +9,7 @@ export default class StatusContainer {
     static todaysPlanArray = null;
     static startTodaysPlan = false;
     static currentRenrenData = null;
+    static ifMainPageCreated = false;
 
     static fetchWords() {
         return new Promise((resolve, reject) => {

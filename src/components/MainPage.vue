@@ -78,6 +78,7 @@ export default {
             }
         },
         gotARandomWord() {
+            //console.log("got a random word");
             let randomWord = this.words[Math.floor(Math.random() * this.words.length)][2];
             return randomWord;
         },
@@ -138,6 +139,7 @@ export default {
                 this.loadAllData();
             }
         });
+        StatusContainer.ifMainPageCreated = true;
     },
 
     beforeDestroy() {
@@ -149,6 +151,7 @@ export default {
         });
         PubSub.unsubscribe('randomWord');
         PubSub.unsubscribe('todaysPlan');
+        StatusContainer.ifMainPageCreated = false;
     },
 
 }

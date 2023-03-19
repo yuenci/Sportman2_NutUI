@@ -4,6 +4,7 @@
             <div class="word-con">{{capitalizeFirstLetter}}</div>
             <div class="voice-icon" @click="playAudio"> <Voice /></div>
         </div>
+        <div v-show="phonetic!==''" class="phonetic">[{{phonetic}}]</div>
         <div class="main-explaination">{{explaination}}</div>
         <nut-collapse v-model="activeNames" class="collapse">
             <nut-collapse-item :name="1">
@@ -32,6 +33,7 @@ export default {
             explaination: "",
             freeDictionaryAPI: "",
             activeNames: ['0'],
+            phonetic: "",
         }
     },
     methods: {
@@ -39,9 +41,11 @@ export default {
             fetch("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + this.word)
                 .then(response => response.json())
                 .then(data => {
+                    this.phonetic = data[0]["phonetic"];
+                    //console.log(data);
                     data = data[0]["meanings"][0]["definitions"]
                     this.freeDictionaryAPI = data;
-                    //console.log(data);
+
                 });
         },
         playAudio() {
@@ -131,5 +135,9 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.phonetic {
+    text-align: center;
 }
 </style>
