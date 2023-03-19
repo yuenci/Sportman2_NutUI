@@ -10,7 +10,7 @@
                     <div v-if="currentPage === 1">Example</div>
                     <div v-if="currentPage === 2">Reading</div>
                     <div v-if="currentPage === 3">Writing</div>
-                    <div v-if="currentPage === 4">Listening</div>
+                    <div v-if="currentPage === 4" >Listening</div>
                     <div v-if="currentPage === 5">Speaking</div>
                 </nut-col>
             </nut-row>
@@ -21,7 +21,7 @@
             <Example v-if="currentPage === 1" />
             <Reading v-if="currentPage === 2" />
             <Writing v-if="currentPage === 3" />
-            <Listening v-if="currentPage === 4" />
+            <Listening v-if="currentPage === 4" :renrenData="renrenData" />
             <Speaking v-if="currentPage === 5" />
         </div>
 
@@ -54,8 +54,7 @@ import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog } from '@nutui/nutui';
-import { showNotify } from '@nutui/nutui';
-import { logLearingTime } from '../Tools';
+import { logLearingTime, getRenRen } from '../Tools';
 
 export default {
     components: {
@@ -74,6 +73,7 @@ export default {
             className: "",
             CheckClass: "hide",
             startTimeStamp: 0,
+            renrenData: null,
             startX: 0,
             startY: 0,
             direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
@@ -233,6 +233,10 @@ export default {
         window.addEventListener('touchstart', this.onTouchStart, { passive: false });
         window.addEventListener('touchmove', this.onTouchMove, { passive: false });
         window.addEventListener('touchend', this.onTouchEnd, { passive: false });
+        getRenRen(this.word).then((data) => {
+            //console.log(data);
+            this.renrenData = data;
+        });
     },
     beforeUnmount() {
         document.removeEventListener("touchend", this.toastMenuShow, false);

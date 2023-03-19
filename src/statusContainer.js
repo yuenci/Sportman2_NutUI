@@ -8,6 +8,7 @@ export default class StatusContainer {
     static settingsCache = null;
     static todaysPlanArray = null;
     static startTodaysPlan = false;
+    static currentRenrenData = null;
 
     static fetchWords() {
         return new Promise((resolve, reject) => {

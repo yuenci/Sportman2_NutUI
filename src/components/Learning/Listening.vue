@@ -8,13 +8,12 @@
             </div>
         </div>
         <ImgAudioCard v-for="(item, index) in renrenData" :key="index" :data="item" />
-        <div>
+        <!-- <div>
             <nut-cell>
                 <nut-input v-model="sentence" placeholder="|" />
                 <nut-button type="info">信息按钮</nut-button>
             </nut-cell>
-
-        </div>
+        </div> -->
     </div>
     <div class="bottom-sapce"></div>
 </template>
@@ -22,7 +21,7 @@
 import StatusContainer from '../../statusContainer.js';
 import { Voice } from '@nutui/icons-vue';
 import { configs } from "../../config.js"
-import { getRenRen } from "../../Tools.js"
+
 import ImgAudioCard from './ImgAudioCard.vue';
 
 export default {
@@ -35,9 +34,11 @@ export default {
             example: "",
             URL: "",
             duration: "0''",
-            renrenData: null,
             sentence: ""
         }
+    },
+    props: {
+        renrenData: Object
     },
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
@@ -90,10 +91,7 @@ export default {
             let seconds = Math.round(duration);
             this.duration = seconds + "''";
         });
-        getRenRen(this.word).then((data) => {
-            //console.log(data);
-            this.renrenData = data;
-        });
+        //console.log(this.renrenData);
     }
 }
 </script>
