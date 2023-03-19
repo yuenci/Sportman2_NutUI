@@ -213,7 +213,7 @@ export default {
                 // 阻止页面滚动
                 e.preventDefault();
                 // 判断方向，左滑为负数，右滑为正数
-                this.direction = deltaX > 0 ? 1 : -1;
+                this.direction = deltaX > 100 ? 1 : -1;
             }
         },
         onTouchEnd(e) {
