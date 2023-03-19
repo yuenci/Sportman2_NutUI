@@ -35,10 +35,10 @@ export default {
             console.log("prepareTodayPlan");
             //console.log(StatusContainer.todaysPlan);
             if (StatusContainer.todaysPlanArray) {
-                console.log("yes cache");
+                //console.log("yes cache");
             } else {
                 // no cache, get from server
-                console.log("no cache");
+                //console.log("no cache");
                 await getTodaysPlan()
                 //console.log(res);
             }

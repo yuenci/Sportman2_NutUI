@@ -130,7 +130,7 @@ export default {
             this.$router.push({ path: `/learning/${randomWord}` });
         });
         PubSub.subscribe('todaysPlan', (msg, data) => {
-            console.log(data.message);
+            //console.log(data.message);
             if (data.message === "start") {
                 this.loadTodaysPlan();
             } else if (data.message === "stop") {
