@@ -1,23 +1,30 @@
-<template lang="">
-    <div class="cells-container" :key="$route.fullPath" >
+<template>
+    <div class="cells-container" :key="$route.fullPath">
         <nut-cell>
             <nut-row>
-                <nut-col :span="12">
-                    <nut-indicator :block="true" algin="center" :size="pageSize" :current="currentPage+1"></nut-indicator>
+                <nut-col :span="9">
+                    <nut-indicator :block="true" algin="center" :size="pageSize" :current="currentPage + 1"
+                        :fill-zero="false"></nut-indicator>
                 </nut-col>
-                <nut-col :span="12">
+                <nut-col :span="11">
                     <div v-if="currentPage === 0">Explanation</div>
                     <div v-if="currentPage === 1">Example</div>
                     <div v-if="currentPage === 2">Reading</div>
                     <div v-if="currentPage === 3">Writing</div>
-                    <div v-if="currentPage === 4" >Listening</div>
+                    <div v-if="currentPage === 4">Listening</div>
                     <div v-if="currentPage === 5">Speaking</div>
+                </nut-col>
+                <nut-col :span="2">
+                    <StarN width="16px"></StarN>
+                </nut-col>
+                <nut-col :span="2">
+                    <Failure width="16px"></Failure>
                 </nut-col>
             </nut-row>
         </nut-cell>
-        
+
         <div class="learning-con">
-            <Explanation v-if="currentPage === 0"/>
+            <Explanation v-if="currentPage === 0" />
             <Example v-if="currentPage === 1" />
             <Reading v-if="currentPage === 2" />
             <Writing v-if="currentPage === 3" />
@@ -28,7 +35,7 @@
         <div class="move-btns">
             <nut-button type="info" size="mini" :disabled="disabledLeft" @click="changePage('prev')">
                 <template #icon>
-                     <RectLeft />
+                    <RectLeft />
                 </template>
             </nut-button>
             <nut-button type="info" size="mini" :disabled="disabledRight" @click="changePage('next')" :class="className">
@@ -36,7 +43,7 @@
                     <RectRight />
                 </template>
             </nut-button>
-            <nut-button type="info" size="mini" color="green"  @click="finishLearning" :class="CheckClass">
+            <nut-button type="info" size="mini" color="green" @click="finishLearning" :class="CheckClass">
                 <template #icon>
                     <Check />
                 </template>
@@ -45,7 +52,7 @@
     </div>
 </template>
 <script>
-import { RectLeft, RectRight, Check } from '@nutui/icons-vue';
+import { RectLeft, RectRight, Check, StarN, Failure } from '@nutui/icons-vue';
 import Explanation from './Learning/Explanation.vue';
 import Example from './Learning/Example.vue';
 import Reading from './Learning/Reading.vue';
@@ -58,7 +65,7 @@ import { logLearingTime, getRenRen } from '../Tools';
 
 export default {
     components: {
-        RectLeft, RectRight, Check,
+        RectLeft, RectRight, Check, StarN, Failure,
         Explanation, Example,
         Reading, Writing, Listening, Speaking
     },
