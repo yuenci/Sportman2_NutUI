@@ -45,24 +45,20 @@ async function submitBug(data) {
     return res;
 }
 
-function getTodayDate() {
-    // get 20220318
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    if (month < 10) {
-        month = "0" + month;
-    }
-    if (day < 10) {
-        day = "0" + day;
-    }
-    return year + "" + month + "" + day;
-}
 
 async function getTodaysPlan() {
     let dailyWordsNum = StatusContainer.settingsCache.dailyWordsNum;
-    let response = await fetch(url + '/plan?num=' + dailyWordsNum)
+    let options = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            num: dailyWordsNum
+        })
+    }
+    let response = await fetch(url + '/plan', options)
     let json = await response.json()
 
     let planKeys = Object.keys(json.plan);
@@ -78,7 +74,17 @@ async function getTodaysPlan() {
 }
 
 async function getRenRen(word) {
-    let response = await fetch(url + '/renren' + '?word=' + word);
+    let options = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            word: word
+        })
+    }
+    let response = await fetch(url + '/renren', options);
     let json = await response.json()
     return json.res;
 }
