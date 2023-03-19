@@ -139,7 +139,6 @@ export default {
                 this.loadAllData();
             }
         });
-        StatusContainer.ifMainPageCreated = true;
     },
 
     beforeDestroy() {
@@ -151,7 +150,6 @@ export default {
         });
         PubSub.unsubscribe('randomWord');
         PubSub.unsubscribe('todaysPlan');
-        StatusContainer.ifMainPageCreated = false;
     },
 
 }

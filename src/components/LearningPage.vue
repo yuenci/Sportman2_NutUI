@@ -62,6 +62,8 @@ import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog } from '@nutui/nutui';
 import { logLearingTime, getRenRen } from '../Tools';
+import JSConfetti from 'js-confetti'
+
 
 export default {
     components: {
@@ -110,6 +112,12 @@ export default {
                 this.disabledLeft = true;
                 this.disabledRight = false;
                 this.getRenrenData();
+            }
+
+            if (newValue === 3) {
+                this.removeMouseUpEvent();
+            } else if (newValue === 4) {
+                this.addMouseUpEvent();
             }
 
             if (newValue === 4, oldValue === 5) {
@@ -201,8 +209,8 @@ export default {
 
                 //#TODO  update plan
             }
-            //;
-            //console.log(StatusContainer.ifMainPageCreated);
+            await this.celebrate();
+
             let currentURL = this.$route.path;
 
             PubSub.publish('randomWord', { message: 'you message here' })
@@ -211,6 +219,7 @@ export default {
                 if (this.$route.path === currentURL)
                     this.$router.push("/words");
             }, 1);
+
         },
         setTimeStart() {
             this.startTimeStamp = new Date().getTime();
@@ -254,10 +263,26 @@ export default {
                 this.renrenData = data;
                 //console.log(data);
             });
-        }
+        },
+        addMouseUpEvent() {
+            document.onmouseup = this.toastMenuShow;
+        },
+        removeMouseUpEvent() {
+            document.onmouseup = null;
+        },
+        async celebrate() {
+            StatusContainer.winInARow += 1;
+            let inArow = StatusContainer.winInARow;
+            if (inArow === 5) {
+                StatusContainer.winInARow = 0;
+                const jsConfetti = new JSConfetti();
+                await jsConfetti.addConfetti()
+            }
+        },
     },
+
     mounted() {
-        document.onmouseup = this.toastMenuShow;
+        this.addMouseUpEvent();
         document.addEventListener("touchend", this.toastMenuShow, false);
         window.addEventListener('touchstart', this.onTouchStart, { passive: false });
         window.addEventListener('touchmove', this.onTouchMove, { passive: false });

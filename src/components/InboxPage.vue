@@ -39,7 +39,6 @@
 </template>
 <script>
 import { showNotify } from '@nutui/nutui';
-import { remove } from '@vue/shared';
 import { url } from '../config';
 
 export default {
