@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         async prepareTodayPlan() {
-            console.log("prepareTodayPlan");
+            //console.log("prepareTodayPlan");
             //console.log(StatusContainer.todaysPlan);
             if (StatusContainer.todaysPlanArray) {
                 //console.log("yes cache");
