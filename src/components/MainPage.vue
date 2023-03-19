@@ -127,6 +127,7 @@ export default {
         PubSub.subscribe('randomWord', (msg, data) => {
             let randomWord = this.gotARandomWord();
             //console.log(randomWord + " is a random word");
+            localStorage.setItem("currentWord", randomWord);
             this.$router.push({ path: `/learning/${randomWord}` });
         });
         PubSub.subscribe('todaysPlan', (msg, data) => {

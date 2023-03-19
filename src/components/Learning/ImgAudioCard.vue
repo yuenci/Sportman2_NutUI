@@ -23,18 +23,6 @@ export default {
             type: Object,
             required: true,
         },
-        // imgSrc: {
-        //     type: String,
-        //     required: true,
-        // },
-        // audioSrc: {
-        //     type: String,
-        //     required: true,
-        // },
-        // text: {
-        //     type: String,
-        //     required: true,
-        // },
     },
     data() {
         return {

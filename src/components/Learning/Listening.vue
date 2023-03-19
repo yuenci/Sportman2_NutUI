@@ -85,13 +85,17 @@ export default {
                 .catch(error => console.log(error));
         },
     },
+    watch: {
+        renrenData: function (newVal, oldVal) {
+            console.log("renrenData changed");
+        }
+    },
     mounted() {
         this.$refs.audio.addEventListener("loadedmetadata", () => {
             let duration = this.$refs.audio.duration;
             let seconds = Math.round(duration);
             this.duration = seconds + "''";
         });
-        //console.log(this.renrenData);
     }
 }
 </script>

@@ -109,6 +109,7 @@ export default {
                 this.className = ""
                 this.disabledLeft = true;
                 this.disabledRight = false;
+                this.getRenrenData();
             }
 
             if (newValue === 4, oldValue === 5) {
@@ -196,7 +197,7 @@ export default {
 
             if (this.startTimeStamp !== null) {
                 let data = await logLearingTime(id, this.setTimeEnd())
-                console.log(data);
+                //console.log(data);
 
                 //#TODO  update plan
             }
@@ -240,6 +241,13 @@ export default {
             }
             this.direction = 0;
         },
+        getRenrenData() {
+            let word = localStorage.getItem("currentWord")
+            getRenRen(word).then((data) => {
+                this.renrenData = data;
+                //console.log(data);
+            });
+        }
     },
     mounted() {
         document.onmouseup = this.toastMenuShow;
@@ -247,10 +255,7 @@ export default {
         window.addEventListener('touchstart', this.onTouchStart, { passive: false });
         window.addEventListener('touchmove', this.onTouchMove, { passive: false });
         window.addEventListener('touchend', this.onTouchEnd, { passive: false });
-        getRenRen(this.word).then((data) => {
-            //console.log(data);
-            this.renrenData = data;
-        });
+        this.getRenrenData();
     },
     beforeUnmount() {
         document.removeEventListener("touchend", this.toastMenuShow, false);
