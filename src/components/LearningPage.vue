@@ -75,7 +75,7 @@ export default {
         return {
             word: "",
             pageSize: 6,
-            currentPage: 0,
+            currentPage: 3,
             disabledLeft: true,
             disabledRight: false,
             textSeleted: "",
@@ -87,7 +87,7 @@ export default {
             startY: 0,
             direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
             currentWordStar: false,
-            moveBtnShow: true,
+            moveBtnShow: false,
         }
     },
     computed: {
@@ -348,8 +348,8 @@ export default {
     },
 
     mounted() {
-        this.addMouseUpToastMenuEvent();
-        this.addSlideSupport();
+        // this.addMouseUpToastMenuEvent();
+        // this.addSlideSupport();
         this.getRenrenData();
     },
     beforeUnmount() {

@@ -129,8 +129,19 @@ async function getTodayPlanNum() {
     return json;
 }
 
+async function chatWithChatGPT(message, word) {
+    let data = {
+        message: message,
+        word: word
+    }
+    let res = await fetchs('POST', url + '/chat', data);
+    return res;
+}
+
+
 export {
     logLearingTime, getDuration, getSettings, setSetting, submitBug,
-    getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum
+    getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum,
+    chatWithChatGPT
 }
 
