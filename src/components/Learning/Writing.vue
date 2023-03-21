@@ -5,6 +5,12 @@
             <MessageCard v-for="(message, index) in messageList" :key="index" :role="message.role"
                 :message="message.content" />
         </div>
+        <div class="tools-bar">
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Examples</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Include</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Qustion</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Story</nut-button>
+        </div>
         <div class="input">
             <nut-textarea v-model="sentence" rows="4" @keyup.enter="sendMessage" />
             <div class="comment-icon">
@@ -86,26 +92,7 @@ export default {
 
     created() {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
-        // for (let i = 0; i < 3; i++) {
-        //     this.messageList.push({
-        //         role: "assistant",
-        //         content: "Hello, I am ChatGPT, I can help you to learn English."
-        //     })
-        //     this.messageList.push({
-        //         role: "user",
-        //         content: "Please type your sentence and I will help you to correct it."
-        //     })
-        // }
         this.chatWithGPT();
-
-        // chatWithChatGPT(this.messageList, this.word).then(res => {
-        //     try {
-        //         this.addMessageToList(res.message[0]);
-        //     } catch (e) {
-        //         console.log(e);
-        //         showNotify.warn("ChatGPT is not available now, please try again later.");
-        //     }
-        // })
     },
 }
 </script>
@@ -116,10 +103,28 @@ export default {
 }
 
 .chat-con {
-    height: calc(100vh - 270px);
-    background-color: aqua;
+    height: calc(100vh - 300px);
+    background-color: #f5f5f5;
     overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tools-bar {
+    background-color: #f5f5f5;
     margin-bottom: 5px;
+    border-radius: 0 0 5px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: calc(100%);
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+.tools-bar::-webkit-scrollbar {
+    display: none;
 }
 
 .input {
@@ -131,5 +136,10 @@ export default {
     right: 10px;
     bottom: 10px;
     cursor: pointer;
+}
+
+.tool-btn {
+    margin-right: 10px;
+    color: black !important;
 }
 </style>
