@@ -46,6 +46,7 @@ export default {
     align-items: flex-start;
     justify-content: flex-start;
     margin-top: 20px;
+    position: relative;
 }
 
 
@@ -72,7 +73,7 @@ export default {
 
 .img-audio-card-text {
     position: absolute;
-    bottom: 0;
+    bottom: 3px;
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);

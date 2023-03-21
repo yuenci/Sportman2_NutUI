@@ -5,6 +5,21 @@ import FBStore from './storeHandler.js';
 
 const fbStore = new FBStore();
 
+async function fetchs(method, url, data) {
+    let options = {
+        method: method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+    let response = await fetch(url, options)
+    let json = await response.json()
+    return json
+}
+
+
 async function logLearingTime(id, time) {
     let options = {
         method: 'POST',
@@ -89,5 +104,14 @@ async function getRenRen(word) {
     return json.res;
 }
 
-export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen }
+async function reportWordBug(id, bug) {
+    let data = {
+        _id: id,
+        bug: bug
+    }
+    let res = await fetchs('POST', url + '/report', data);
+    return res;
+}
+
+export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen, reportWordBug }
 

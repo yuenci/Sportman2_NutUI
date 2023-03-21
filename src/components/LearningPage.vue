@@ -15,10 +15,10 @@
                     <div v-if="currentPage === 5">Speaking</div>
                 </nut-col>
                 <nut-col :span="2">
-                    <StarN width="16px"></StarN>
+                    <StarN width="16px" @click="starHandle"></StarN>
                 </nut-col>
                 <nut-col :span="2">
-                    <Failure width="16px"></Failure>
+                    <Failure width="16px" @click="reportBugHandle"></Failure>
                 </nut-col>
             </nut-row>
         </nut-cell>
@@ -61,7 +61,7 @@ import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog } from '@nutui/nutui';
-import { logLearingTime, getRenRen } from '../Tools';
+import { logLearingTime, getRenRen, reportWordBug } from '../Tools';
 import JSConfetti from 'js-confetti'
 
 
@@ -279,21 +279,51 @@ export default {
                 await jsConfetti.addConfetti()
             }
         },
+        starHandle() {
+            let wordID = localStorage.getItem("currentWordID");
+            console.log("star:" + wordID);
+
+        },
+        reportBugHandle() {
+            document.removeEventListener("touchend", this.toastMenuShow, false);
+            let wordID = localStorage.getItem("currentWordID");
+            showDialog({
+                title: this.textSeleted,
+                content: `<input id="bugInput" type="text" placeholder="bug description" />`,
+                onCancel: () => {
+                    console.log("cancel");
+                    document.addEventListener("touchend", this.toastMenuShow, false);
+                },
+                onOk: () => {
+                    let bug = document.getElementById("bugInput").value;
+                    reportWordBug(wordID, bug);
+                    document.addEventListener("touchend", this.toastMenuShow, false);
+                }
+            });
+            console.log("report bug:" + wordID);
+            reportWordBug(wordID, "222");
+        },
+        addSlideSupport() {
+            window.addEventListener('touchstart', this.onTouchStart, { passive: false });
+            window.addEventListener('touchmove', this.onTouchMove, { passive: false });
+            window.addEventListener('touchend', this.onTouchEnd, { passive: false });
+        },
+        removerSlideSupport() {
+            window.removeEventListener('touchstart', this.onTouchStart, false);
+            window.removeEventListener('touchmove', this.onTouchMove, false);
+            window.removeEventListener('touchend', this.onTouchEnd, false);
+        }
     },
 
     mounted() {
         this.addMouseUpEvent();
         document.addEventListener("touchend", this.toastMenuShow, false);
-        window.addEventListener('touchstart', this.onTouchStart, { passive: false });
-        window.addEventListener('touchmove', this.onTouchMove, { passive: false });
-        window.addEventListener('touchend', this.onTouchEnd, { passive: false });
+        this.addSlideSupport();
         this.getRenrenData();
     },
     beforeUnmount() {
         document.removeEventListener("touchend", this.toastMenuShow, false);
-        document.removeEventListener('touchstart', this.onTouchStart, false);
-        document.removeEventListener('touchmove', this.onTouchMove, false);
-        document.removeEventListener('touchend', this.onTouchEnd, false);
+        this.removerSlideSupport();
     },
 }
 </script>
@@ -320,10 +350,21 @@ export default {
 .dialog-content {
     text-align: left !important;
     word-break: break-all !important;
-
+    position: relative;
 }
 
 .hide {
     display: none;
+}
+
+#bugInput {
+    /* hide out line */
+    outline: none;
+    width: calc(100% - 48px);
+    height: 70px;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    border: 1px solid #ccc;
 }
 </style>
