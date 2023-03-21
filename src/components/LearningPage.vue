@@ -15,7 +15,7 @@
                     <div v-if="currentPage === 5">Speaking</div>
                 </nut-col>
                 <nut-col :span="2">
-                    <StarN width="16px" @click="starHandle"></StarN>
+                    <StarN width="16px" @click="starHandle" :color="currentWordStar === true ? 'yellow' : ''"></StarN>
                 </nut-col>
                 <nut-col :span="2">
                     <Failure width="16px" @click="reportBugHandle"></Failure>
@@ -24,7 +24,7 @@
         </nut-cell>
 
         <div class="learning-con">
-            <Explanation v-if="currentPage === 0" />
+            <Explanation v-if="currentPage === 0" @setStar="setStar" />
             <Example v-if="currentPage === 1" />
             <Reading v-if="currentPage === 2" />
             <Writing v-if="currentPage === 3" />
@@ -61,7 +61,7 @@ import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
 import { showDialog, showNotify } from '@nutui/nutui';
-import { logLearingTime, getRenRen, reportWordBug } from '../Tools';
+import { logLearingTime, getRenRen, reportWordBug, starWord } from '../Tools';
 import JSConfetti from 'js-confetti';
 
 export default {
@@ -85,6 +85,7 @@ export default {
             startX: 0,
             startY: 0,
             direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
+            currentWordStar: false,
         }
     },
     computed: {
@@ -114,9 +115,9 @@ export default {
             }
 
             if (newValue === 3) {
-                this.removeMouseUpEvent();
+                this.removeMouseUpToastMenuEvent();
             } else if (newValue === 4) {
-                this.addMouseUpEvent();
+                this.addMouseUpToastMenuEvent();
             }
 
             if (newValue === 4, oldValue === 5) {
@@ -284,7 +285,13 @@ export default {
         starHandle() {
             let wordID = localStorage.getItem("currentWordID");
             console.log("star:" + wordID);
-
+            this.currentWordStar = !this.currentWordStar;
+            starWord(wordID, this.currentWordStar).then((data) => {
+                showNotify.success('Star updated successfully');
+            });
+        },
+        setStar(ifStar) {
+            this.currentWordStar = ifStar;
         },
         reportBugHandle() {
             let wordID = localStorage.getItem("currentWordID");
@@ -316,7 +323,7 @@ export default {
             window.removeEventListener('touchstart', this.onTouchStart, { passive: false });
             window.removeEventListener('touchmove', this.onTouchMove, { passive: false });
             window.removeEventListener('touchend', this.onTouchEnd, { passive: false });
-        }
+        },
     },
 
     mounted() {

@@ -24,6 +24,7 @@ import StatusContainer from '../../statusContainer.js';
 import { Voice } from '@nutui/icons-vue';
 
 export default {
+    emits: ['setStar'],
     components: {
         Voice,
     },
@@ -76,6 +77,13 @@ export default {
         //console.log(cuerrentWordData);
         if (cuerrentWordData !== undefined) {
             localStorage.setItem("currentWordID", cuerrentWordData._id);
+        }
+
+        // setstar
+        try {
+            this.$emit('setStar', cuerrentWordData.star);
+        } catch (e) {
+            this.$emit('setStar', false);
         }
     },
 

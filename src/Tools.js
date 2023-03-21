@@ -113,5 +113,14 @@ async function reportWordBug(id, bug) {
     return res;
 }
 
-export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen, reportWordBug }
+async function starWord(id, star) {
+    let data = {
+        _id: id,
+        star: star
+    }
+    let res = await fetchs('POST', url + '/star', data);
+    return res;
+}
+
+export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen, reportWordBug, starWord }
 
