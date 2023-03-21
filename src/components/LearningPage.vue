@@ -1,6 +1,6 @@
 <template>
     <div class="cells-container" :key="$route.fullPath">
-        <nut-cell>
+        <nut-cell @click="switchMoveBtnShow">
             <nut-row>
                 <nut-col :span="9">
                     <nut-indicator :block="true" algin="center" :size="pageSize" :current="currentPage + 1"
@@ -15,10 +15,10 @@
                     <div v-if="currentPage === 5">Speaking</div>
                 </nut-col>
                 <nut-col :span="2">
-                    <StarN width="16px" @click="starHandle" :color="currentWordStar === true ? 'yellow' : ''"></StarN>
+                    <StarN width="16px" @click.stop="starHandle" :color="currentWordStar === true ? 'yellow' : ''"></StarN>
                 </nut-col>
                 <nut-col :span="2">
-                    <Failure width="16px" @click="reportBugHandle"></Failure>
+                    <Failure width="16px" @click.stop="reportBugHandle"></Failure>
                 </nut-col>
             </nut-row>
         </nut-cell>
@@ -32,7 +32,7 @@
             <Speaking v-if="currentPage === 5" />
         </div>
 
-        <div class="move-btns">
+        <div class="move-btns" v-show="moveBtnShow">
             <nut-button type="info" size="mini" :disabled="disabledLeft" @click="changePage('prev')">
                 <template #icon>
                     <RectLeft />
@@ -87,6 +87,7 @@ export default {
             startY: 0,
             direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
             currentWordStar: false,
+            moveBtnShow: true,
         }
     },
     computed: {
@@ -116,6 +117,7 @@ export default {
             }
 
             if (newValue === 3) {
+                //console.log("remove mouse up event");
                 this.removeMouseUpToastMenuEvent();
             } else if (newValue === 4) {
                 this.addMouseUpToastMenuEvent();
@@ -338,6 +340,10 @@ export default {
             window.removeEventListener('touchstart', this.onTouchStart, { passive: false });
             window.removeEventListener('touchmove', this.onTouchMove, { passive: false });
             window.removeEventListener('touchend', this.onTouchEnd, { passive: false });
+        },
+        switchMoveBtnShow() {
+            console.log("switchMoveBtnShow");
+            this.moveBtnShow = !this.moveBtnShow;
         },
     },
 

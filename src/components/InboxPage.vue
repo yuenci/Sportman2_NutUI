@@ -33,6 +33,10 @@
                 <nut-input v-model="currentTag" placeholder="Type a tag" @keyup.enter="addTag" />
             </nut-cell-group>
         </div>
+        <div class="input-cell">
+            <div class="tip-text">Source</div>
+            <nut-input v-model="source" placeholder="Type the source" />
+        </div>
         <nut-button block type="primary" class="enter-btn" @click="addWord">Yes !</nut-button>
 
     </div>
@@ -50,6 +54,7 @@ export default {
             dictoryExample: '',
             currentTag: '',
             tags: [],
+            source: '',
             show: true,
         }
     },
@@ -68,6 +73,7 @@ export default {
                     learnerExample: this.learnerExample.split('\n'),
                     dictoryExample: this.dictoryExample.split('\n'),
                     tags: this.tags,
+                    source: this.source,
                 }),
             }
             if (!this.valid()) return;
