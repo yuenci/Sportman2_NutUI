@@ -6,10 +6,14 @@
                 :message="message.content" />
         </div>
         <div class="tools-bar">
-            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Examples</nut-button>
-            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Include</nut-button>
-            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Qustion</nut-button>
-            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn">Story</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn"
+                @click="toolbarHandler('Examples')">Examples</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn"
+                @click="toolbarHandler('Include')">Include</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn"
+                @click="toolbarHandler('Question')">Question</nut-button>
+            <nut-button size="mini" type="primary" color="#dee2e6" class="tool-btn"
+                @click="toolbarHandler('Story')">Story</nut-button>
         </div>
         <div class="input">
             <nut-textarea v-model="sentence" rows="4" @keyup.enter="sendMessage" />
@@ -56,6 +60,24 @@ export default {
                 top: scrollH,
                 behavior: "smooth"
             })
+        },
+        toolbarHandler(type) {
+            type = type.toLowerCase();
+            let data = {
+                role: "user",
+                content: ""
+            }
+            if (type == "examples") {
+                data.content = "give me three examples"
+            } else if (type == "include") {
+                data.content = `your last answer didn't include: ${this.word}`
+            } else if (type == "question") {
+                data.content = `ask me a question include:  ${this.word}`
+            } else if (type == "story") {
+                data.content = `tell me a short story include:  ${this.word}`
+            }
+            this.addMessageToList(data);
+            this.chatWithGPT();
         },
         chatWithGPT() {
             chatWithChatGPT(this.messageList, this.word).then(res => {
@@ -121,6 +143,7 @@ export default {
     width: calc(100%);
     overflow-x: scroll;
     scrollbar-width: none;
+    padding-top: 5px;
 }
 
 .tools-bar::-webkit-scrollbar {
