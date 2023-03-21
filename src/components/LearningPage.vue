@@ -75,7 +75,7 @@ export default {
         return {
             word: "",
             pageSize: 6,
-            currentPage: 3,
+            currentPage: 0,
             disabledLeft: true,
             disabledRight: false,
             textSeleted: "",
@@ -87,7 +87,7 @@ export default {
             startY: 0,
             direction: 0, // 0表示无滑动，1表示右滑，-1表示左滑
             currentWordStar: false,
-            moveBtnShow: false,
+            moveBtnShow: true,
         }
     },
     computed: {
@@ -119,6 +119,7 @@ export default {
             if (newValue === 3) {
                 //console.log("remove mouse up event");
                 this.removeMouseUpToastMenuEvent();
+                this.moveBtnShow = false;
             } else if (newValue === 4) {
                 this.addMouseUpToastMenuEvent();
             }
@@ -348,8 +349,8 @@ export default {
     },
 
     mounted() {
-        // this.addMouseUpToastMenuEvent();
-        // this.addSlideSupport();
+        this.addMouseUpToastMenuEvent();
+        this.addSlideSupport();
         this.getRenrenData();
     },
     beforeUnmount() {

@@ -68,13 +68,13 @@ export default {
                 content: ""
             }
             if (type == "examples") {
-                data.content = "give me three examples"
+                data.content = `Give me three examples of:  ${this.word}`
             } else if (type == "include") {
-                data.content = `your last answer didn't include: ${this.word}`
+                data.content = `Your last answer didn't include: ${this.word}`
             } else if (type == "question") {
-                data.content = `ask me a question include:  ${this.word}`
+                data.content = `Ask me a question include:  ${this.word}`
             } else if (type == "story") {
-                data.content = `tell me a short story include:  ${this.word}`
+                data.content = `Tell me a short story include:  ${this.word}`
             }
             this.addMessageToList(data);
             this.chatWithGPT();
