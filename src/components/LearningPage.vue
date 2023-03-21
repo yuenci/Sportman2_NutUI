@@ -60,10 +60,9 @@ import Writing from './Learning/Writing.vue';
 import Listening from './Learning/Listening.vue';
 import Speaking from './Learning/Speaking.vue';
 import StatusContainer from '../StatusContainer.js';
-import { showDialog } from '@nutui/nutui';
+import { showDialog, showNotify } from '@nutui/nutui';
 import { logLearingTime, getRenRen, reportWordBug } from '../Tools';
-import JSConfetti from 'js-confetti'
-
+import JSConfetti from 'js-confetti';
 
 export default {
     components: {
@@ -183,6 +182,7 @@ export default {
         },
         toastMenuShow() {
             var selectedText = window.getSelection().toString().trim();
+            //console.log(selectedText);
             window.getSelection().removeAllRanges() // clear selection
 
             if (selectedText == this.textSeleted) {
@@ -264,10 +264,12 @@ export default {
                 //console.log(data);
             });
         },
-        addMouseUpEvent() {
+        addMouseUpToastMenuEvent() {
             document.onmouseup = this.toastMenuShow;
+            //window.addEventListener('mouseup', this.toastMenuShow);
         },
-        removeMouseUpEvent() {
+        removeMouseUpToastMenuEvent() {
+            //window.removeEventListener('mouseup', this.toastMenuShow);
             document.onmouseup = null;
         },
         async celebrate() {
@@ -285,22 +287,24 @@ export default {
 
         },
         reportBugHandle() {
-            document.removeEventListener("touchend", this.toastMenuShow, false);
             let wordID = localStorage.getItem("currentWordID");
+            this.removeMouseUpToastMenuEvent();
             showDialog({
                 title: this.textSeleted,
-                content: `<input id="bugInput" type="text" placeholder="bug description" />`,
+                content: `<textarea  id="bugInput" type="text" placeholder="bug description" />`,
                 onCancel: () => {
                     console.log("cancel");
-                    document.addEventListener("touchend", this.toastMenuShow, false);
+                    this.addMouseUpToastMenuEvent();
                 },
                 onOk: () => {
                     let bug = document.getElementById("bugInput").value;
-                    reportWordBug(wordID, bug);
-                    document.addEventListener("touchend", this.toastMenuShow, false);
+                    reportWordBug(wordID, bug).then((data) => {
+                        showNotify.success('Bug report submitted successfully');
+                    });
+                    this.addMouseUpToastMenuEvent();
                 }
             });
-            console.log("report bug:" + wordID);
+            //console.log("report bug:" + wordID);
             reportWordBug(wordID, "222");
         },
         addSlideSupport() {
@@ -309,20 +313,19 @@ export default {
             window.addEventListener('touchend', this.onTouchEnd, { passive: false });
         },
         removerSlideSupport() {
-            window.removeEventListener('touchstart', this.onTouchStart, false);
-            window.removeEventListener('touchmove', this.onTouchMove, false);
-            window.removeEventListener('touchend', this.onTouchEnd, false);
+            window.removeEventListener('touchstart', this.onTouchStart, { passive: false });
+            window.removeEventListener('touchmove', this.onTouchMove, { passive: false });
+            window.removeEventListener('touchend', this.onTouchEnd, { passive: false });
         }
     },
 
     mounted() {
-        this.addMouseUpEvent();
-        document.addEventListener("touchend", this.toastMenuShow, false);
+        this.addMouseUpToastMenuEvent();
         this.addSlideSupport();
         this.getRenrenData();
     },
     beforeUnmount() {
-        document.removeEventListener("touchend", this.toastMenuShow, false);
+        this.removeMouseUpToastMenuEvent();
         this.removerSlideSupport();
     },
 }
@@ -366,5 +369,6 @@ export default {
     top: 24px;
     left: 24px;
     border: 1px solid #ccc;
+    resize: none
 }
 </style>

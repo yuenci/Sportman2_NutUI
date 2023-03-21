@@ -2,8 +2,6 @@
 
 $ firebase deploy --only hosting
 
-
-
 # WordStatus
 
 -1 : bug
@@ -11,7 +9,6 @@ $ firebase deploy --only hosting
 0 : learing
 
 1 : done
-
 
 # dialog
 
@@ -28,3 +25,9 @@ $ firebase deploy --only hosting
                 onOk
             });
 ```
+
+
+
+import { showNotify } from'@nutui/nutui';
+
+showNotify.success('Bug report submitted successfully');
