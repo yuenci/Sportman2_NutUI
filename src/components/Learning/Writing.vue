@@ -11,7 +11,6 @@
                 <Comment v-show="!showComment" @click="sendMessage" />
                 <Comment v-show="showComment" color="green" @click="sendMessage" />
             </div>
-
         </div>
 
     </div>
@@ -52,28 +51,36 @@ export default {
                 behavior: "smooth"
             })
         },
+        chatWithGPT() {
+            chatWithChatGPT(this.messageList, this.word).then(res => {
+                try {
+                    this.addMessageToList(res.message[0]);
+                } catch (e) {
+                    console.log(e);
+                    showNotify.warning("ChatGPT is not available now, please try again later.");
+                }
+            });
+        },
         sendMessage() {
+            if (this.sentence.length == 0) return;
             if (this.showComment) {
                 // console.log("send message");
-                this.messageList.push({
+                let data = {
                     role: "user",
                     content: this.sentence
-                });
+                }
+                this.addMessageToList(data);
                 this.sentence = "";
-                chatWithChatGPT(this.messageList, this.word).then(res => {
-                    try {
-                        this.addMessageToList(res);
-                    } catch (e) {
-                        console.log(e);
-                        showNotify.warning("ChatGPT is not available now, please try again later.");
-                    }
-                });
+
+                this.chatWithGPT();
             }
 
         },
         addMessageToList(res) {
-            this.messageList.push(res.message[0])
-            this.scrollToBottom();
+            this.messageList.push(res)
+            setTimeout(() => {
+                this.scrollToBottom();
+            }, 100);
         }
     },
 
@@ -89,29 +96,30 @@ export default {
         //         content: "Please type your sentence and I will help you to correct it."
         //     })
         // }
+        this.chatWithGPT();
 
-
-        chatWithChatGPT(this.messageList, this.word).then(res => {
-            try {
-                this.addMessageToList(res);
-            } catch (e) {
-                console.log(e);
-                showNotify.warn("ChatGPT is not available now, please try again later.");
-            }
-        })
+        // chatWithChatGPT(this.messageList, this.word).then(res => {
+        //     try {
+        //         this.addMessageToList(res.message[0]);
+        //     } catch (e) {
+        //         console.log(e);
+        //         showNotify.warn("ChatGPT is not available now, please try again later.");
+        //     }
+        // })
     },
 }
 </script>
 
 <style scoped>
 .container {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 250px);
 }
 
 .chat-con {
     height: calc(100vh - 270px);
     background-color: aqua;
     overflow-y: scroll;
+    margin-bottom: 5px;
 }
 
 .input {
