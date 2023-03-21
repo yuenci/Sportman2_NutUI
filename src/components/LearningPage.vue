@@ -63,6 +63,7 @@ import StatusContainer from '../StatusContainer.js';
 import { showDialog, showNotify } from '@nutui/nutui';
 import { logLearingTime, getRenRen, reportWordBug, starWord } from '../Tools';
 import JSConfetti from 'js-confetti';
+import getQuotation from '../assets/quotations';
 
 export default {
     components: {
@@ -275,11 +276,25 @@ export default {
         },
         async celebrate() {
             StatusContainer.winInARow += 1;
+            //console.log(StatusContainer.winInARow);
             let inArow = StatusContainer.winInARow;
             if (inArow === 5) {
-                StatusContainer.winInARow = 0;
                 const jsConfetti = new JSConfetti();
                 await jsConfetti.addConfetti()
+            }
+
+            if (inArow === 10) {
+                StatusContainer.winInARow = 0;
+                showDialog({
+                    title: this.textSeleted,
+                    content: `<div>${getQuotation()}</div>`,
+                    onCancel: () => {
+                        console.log("cancel");
+                    },
+                    onOk: () => {
+                        console.log("ok");
+                    }
+                })
             }
         },
         starHandle() {

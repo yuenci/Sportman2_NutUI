@@ -122,5 +122,15 @@ async function starWord(id, star) {
     return res;
 }
 
-export { logLearingTime, getDuration, getSettings, setSetting, submitBug, getTodaysPlan, getRenRen, reportWordBug, starWord }
+
+async function getTodayPlanNum() {
+    let response = await fetch(url + '/days')
+    let json = await response.json()
+    return json;
+}
+
+export {
+    logLearingTime, getDuration, getSettings, setSetting, submitBug,
+    getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum
+}
 
