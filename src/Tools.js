@@ -2,7 +2,7 @@ import { async } from '@firebase/util';
 import { url, PEXELS_Key } from './config.js'
 import StatusContainer from './statusContainer.js';
 import FBStore from './storeHandler.js';
-import configs from './config.js';
+import { configs } from './config.js';
 
 const fbStore = new FBStore();
 
@@ -155,7 +155,7 @@ async function addWord(data) {
     return res;
 }
 
-function speechS(text) {
+async function speechS(text) {
     const SPEECH_REGION = configs.serviceRegion;
     const SPEECH_KEY = configs.subscriptionKey;
 
@@ -177,15 +177,24 @@ function speechS(text) {
         body: data
     };
 
-    fetch(url, requestOptions)
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            //console.log(data);
-            const blob = new Blob([data], { type: "audio/mp3" });
-            const url = window.URL.createObjectURL(blob);
-            return url;
-        })
-        .catch(error => console.log(error));
+
+    // fetch(url, requestOptions)
+    //     .then(response => response.arrayBuffer())
+    //     .then(data => {
+    //         //console.log(data);
+    //         const blob = new Blob([data], { type: "audio/mp3" });
+    //         const url = window.URL.createObjectURL(blob);
+    //         return url;
+    //     })
+    //     .catch(error => console.log(error));
+
+
+    let response = await fetch(url, requestOptions)
+    let bufferData = await response.arrayBuffer();
+    const blob = new Blob([bufferData], { type: "audio/mp3" });
+    return window.URL.createObjectURL(blob)
+
+
 }
 
 export {

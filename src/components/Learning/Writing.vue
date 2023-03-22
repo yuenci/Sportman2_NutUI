@@ -55,6 +55,7 @@ export default {
     methods: {
         scrollToBottom() {
             let chatConObj = this.$refs.chatContainer;
+            if (!chatConObj) return;
             let scrollH = chatConObj.scrollHeight;
             chatConObj.scrollTo({
                 top: scrollH,

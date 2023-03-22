@@ -2,15 +2,22 @@
     <div :class="containerClass">
         <img src="../assets/ChatGPT_logo.jpg" alt="ChatGPT logo" class="avatar" v-if="role === 'assistant'">
         <img src="../assets/user.jpg" alt="user avatar" class="avatar" v-if="role === 'user'">
-        <div class="message-container">
+        <div class="message-container" @click="play">
             <div class="message-triangle triangle-left" v-if="role === 'assistant'"></div>
             <div class="message-triangle triangle-right" v-if="role === 'user'"></div>
             <div class="message-box">{{ message }}</div>
         </div>
+        <audio :src="audioUrl" controls ref="audio" class="card-audio-tag"></audio>
     </div>
 </template>
 <script>
+import { speechS } from '../Tools';
 export default {
+    data() {
+        return {
+            audioUrl: "",
+        }
+    },
     props: {
         role: String,
         message: String,
@@ -19,6 +26,17 @@ export default {
         containerClass() {
             return this.role === 'user' ? 'message-con-user ' : 'message-con-assistant';
         }
+    },
+    methods: {
+        play() {
+            this.$refs.audio.play();
+        },
+        async getURL() {
+            this.audioUrl = await speechS(this.message)
+        }
+    },
+    mounted() {
+        this.getURL();
     }
 }
 </script>
@@ -72,5 +90,9 @@ export default {
 .triangle-right {
     transform: rotate(-45deg);
     right: -4px;
+}
+
+.card-audio-tag {
+    display: none;
 }
 </style>

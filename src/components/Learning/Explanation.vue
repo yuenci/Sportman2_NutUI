@@ -92,7 +92,7 @@ export default {
         // get image
         getImage(this.word).then((data) => {
             this.imageUrl = data.photos[0].src.portrait;
-            console.log(data);
+            //console.log(data);
         });
 
     },
