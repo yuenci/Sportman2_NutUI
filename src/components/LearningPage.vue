@@ -122,6 +122,7 @@ export default {
                 this.moveBtnShow = false;
             } else if (newValue === 4) {
                 this.addMouseUpToastMenuEvent();
+                this.moveBtnShow = true;
             }
 
             if (newValue === 4, oldValue === 5) {
@@ -343,7 +344,7 @@ export default {
             window.removeEventListener('touchend', this.onTouchEnd, { passive: false });
         },
         switchMoveBtnShow() {
-            console.log("switchMoveBtnShow");
+            //console.log("switchMoveBtnShow");
             this.moveBtnShow = !this.moveBtnShow;
         },
     },
