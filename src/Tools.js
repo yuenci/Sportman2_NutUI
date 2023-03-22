@@ -149,10 +149,14 @@ async function getImage(word) {
     return json;
 }
 
+async function addWord(data) {
+    let res = await fetchs('POST', url + '/word', data);
+    return res;
+}
 
 export {
     logLearingTime, getDuration, getSettings, setSetting, submitBug,
     getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum,
-    chatWithChatGPT, getImage
+    chatWithChatGPT, getImage, addWord
 }
 

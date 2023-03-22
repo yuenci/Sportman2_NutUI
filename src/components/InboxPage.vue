@@ -44,6 +44,7 @@
 <script>
 import { showNotify } from '@nutui/nutui';
 import { url } from '../config';
+import { addWord } from '../Tools';
 
 export default {
     data() {
@@ -62,29 +63,23 @@ export default {
         addWord() {
             //console.log(this.word, this.explain, this.learnerExample, this.dictoryExample);
             // ues fetch send post request
-            let options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    word: this.word,
-                    explain: this.explain,
-                    learnerExample: this.learnerExample.split('\n'),
-                    dictoryExample: this.dictoryExample.split('\n'),
-                    tags: this.tags,
-                    source: this.source,
-                }),
+            let data = {
+                word: this.word,
+                explain: this.explain,
+                learnerExample: this.learnerExample.split('\n'),
+                dictoryExample: this.dictoryExample.split('\n'),
+                tags: this.tags,
+                source: this.source,
             }
             if (!this.valid()) return;
-            fetch(`${url}/word`, options)
-                .then((res) => {
-                    res.json();
-                    showNotify.success('Add word success');
-                })
-                .then((res) => {
-                    console.log(res);
-                });
+            addWord(data).then((res) => {
+                console.log(res);
+                clear();
+                showNotify.success('Add word success');
+            }).catch((err) => {
+                console.log(err);
+                showNotify.error('Add word failed');
+            });
         },
         valid() {
             // if (this.word === '' || this.explain === '' || this.learnerExample === '' || this.dictoryExample === '') {
@@ -93,6 +88,15 @@ export default {
                 return false;
             }
             return true;
+        },
+        clear() {
+            this.word = '';
+            this.explain = '';
+            this.learnerExample = '';
+            this.dictoryExample = '';
+            this.currentTag = '';
+            this.tags = [];
+            this.source = '';
         },
         close() {
             this.show = false;

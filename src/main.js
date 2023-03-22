@@ -9,6 +9,7 @@ import LearningPage from './components/LearningPage.vue'
 import DataPage from './components/DataPage.vue'
 import InboxPage from './components/InboxPage.vue'
 import SettingsPage from './components/SettingsPage.vue'
+import '@nutui/icons-vue/dist/style_iconfont.css';
 
 
 

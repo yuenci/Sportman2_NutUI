@@ -156,7 +156,7 @@ export default {
 
 .comment-icon {
     position: absolute;
-    right: 10px;
+    right: 25px;
     bottom: 10px;
     cursor: pointer;
 }
