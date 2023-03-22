@@ -21,6 +21,7 @@
 import StatusContainer from '../../statusContainer.js';
 import { Voice } from '@nutui/icons-vue';
 import { configs } from "../../config.js"
+import { speechS } from "../../tools.js"
 
 import ImgAudioCard from './ImgAudioCard.vue';
 
@@ -44,8 +45,9 @@ export default {
         this.word = this.$route.params.word || localStorage.getItem("currentWord");
         this.example = StatusContainer.getWords[this.word].learner_example[0];
         // this.URL = this.URL + this.example + "&type=1";
-        this.speech(this.example);
-
+        // this.speech(this.example);
+        let url = speechS(this.example);
+        this.URL = url;
     },
     methods: {
         play() {

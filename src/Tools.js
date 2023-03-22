@@ -2,6 +2,7 @@ import { async } from '@firebase/util';
 import { url, PEXELS_Key } from './config.js'
 import StatusContainer from './statusContainer.js';
 import FBStore from './storeHandler.js';
+import configs from './config.js';
 
 const fbStore = new FBStore();
 
@@ -154,9 +155,42 @@ async function addWord(data) {
     return res;
 }
 
+function speechS(text) {
+    const SPEECH_REGION = configs.serviceRegion;
+    const SPEECH_KEY = configs.subscriptionKey;
+
+    const url = `https://${SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
+    const data = `<speak version='1.0' xml:lang='en-US'>
+                        <voice xml:lang='en-US' xml:gender='Female' name='en-US-JennyNeural'>
+                            ${text}
+                        </voice>
+                        </speak>`;
+
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Ocp-Apim-Subscription-Key": SPEECH_KEY,
+            "Content-Type": "application/ssml+xml",
+            "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+            "User-Agent": "curl"
+        },
+        body: data
+    };
+
+    fetch(url, requestOptions)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            //console.log(data);
+            const blob = new Blob([data], { type: "audio/mp3" });
+            const url = window.URL.createObjectURL(blob);
+            return url;
+        })
+        .catch(error => console.log(error));
+}
+
 export {
     logLearingTime, getDuration, getSettings, setSetting, submitBug,
     getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum,
-    chatWithChatGPT, getImage, addWord
+    chatWithChatGPT, getImage, addWord, speechS
 }
 

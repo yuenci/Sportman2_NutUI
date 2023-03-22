@@ -73,8 +73,8 @@ export default {
             }
             if (!this.valid()) return;
             addWord(data).then((res) => {
-                console.log(res);
-                clear();
+                //console.log(res);
+                this.clear();
                 showNotify.success('Add word success');
             }).catch((err) => {
                 console.log(err);
