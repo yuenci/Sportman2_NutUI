@@ -78,7 +78,7 @@ export default {
                 showNotify.success('Add word success');
             }).catch((err) => {
                 console.log(err);
-                showNotify.error('Add word failed');
+                showNotify.warn('Add word failed');
             });
         },
         valid() {
