@@ -91,6 +91,9 @@ export default {
             case "/settings":
                 this.titleName = "Settings";
                 break;
+            case "/englishpod":
+                this.titleName = "EnglishPod";
+                break;
             default:
                 break;
         }

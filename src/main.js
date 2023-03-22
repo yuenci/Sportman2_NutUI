@@ -9,6 +9,7 @@ import LearningPage from './components/LearningPage.vue'
 import DataPage from './components/DataPage.vue'
 import InboxPage from './components/InboxPage.vue'
 import SettingsPage from './components/SettingsPage.vue'
+import EnglishPod from './components/EnglishPod/EnglishPod.vue'
 import '@nutui/icons-vue/dist/style_iconfont.css';
 
 
@@ -24,6 +25,7 @@ const routes = [
     { path: '/data', component: DataPage },
     { path: '/inbox', component: InboxPage },
     { path: '/settings', component: SettingsPage },
+    { path: '/englishpod', component: EnglishPod },
 ]
 
 

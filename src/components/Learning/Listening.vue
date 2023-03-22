@@ -51,7 +51,7 @@ export default {
         },
         async getURL() {
             let url = await speechS(this.example);
-            console.log(url);
+            //console.log(url);
             this.URL = url;
         },
     },

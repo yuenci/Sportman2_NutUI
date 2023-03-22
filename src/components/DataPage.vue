@@ -15,6 +15,7 @@
             <div>Level {{ level }}: {{ title }} </div>
             <div>{{ distance }} left to go to the next level!</div>
         </div>
+        <nut-cell title="English Pod" to="/englishpod"></nut-cell>
     </div>
 </template>
 <script>
