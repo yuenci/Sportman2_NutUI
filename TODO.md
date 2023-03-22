@@ -23,8 +23,8 @@
 * [ ] check if word already exist before add new word
 * [X] 获取人人的资源
 * [ ] 自动检测有问题的卡片
-* [ ] bug 收集处理
-* [ ] 执行爬虫，把影音资源爬取到自己的服务器
+* [X] bug 收集处理
+* [X] 执行爬虫，把影音资源爬取到自己的服务器
 * [ ] 把每次writing的内容都存下来
 * [ ] nutui 定向导入不要全量
 * [ ] 修复middleware的问题，现在不可以使用url 参数

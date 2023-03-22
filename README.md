@@ -1,6 +1,6 @@
 # deploy
 
-$ firebase deploy --only hosting
+$ yarn build && firebase deploy --only hosting
 
 # WordStatus
 
@@ -25,8 +25,6 @@ $ firebase deploy --only hosting
                 onOk
             });
 ```
-
-
 
 import { showNotify } from'@nutui/nutui';
 

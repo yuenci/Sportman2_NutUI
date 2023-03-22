@@ -249,7 +249,7 @@ export default {
                 // 阻止页面滚动
                 e.preventDefault();
                 // 判断方向，左滑为负数，右滑为正数
-                this.direction = deltaX > 150 ? 1 : -1;
+                this.direction = deltaX > 130 ? 1 : -1;
             }
         },
         onTouchEnd(e) {
@@ -330,7 +330,7 @@ export default {
                 }
             });
             //console.log("report bug:" + wordID);
-            reportWordBug(wordID, "222");
+            //reportWordBug(wordID, "222");
         },
         addSlideSupport() {
             window.addEventListener('touchstart', this.onTouchStart, { passive: false });

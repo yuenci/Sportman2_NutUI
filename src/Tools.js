@@ -1,5 +1,5 @@
 import { async } from '@firebase/util';
-import { url } from './config.js'
+import { url, PEXELS_Key } from './config.js'
 import StatusContainer from './statusContainer.js';
 import FBStore from './storeHandler.js';
 
@@ -138,10 +138,21 @@ async function chatWithChatGPT(message, word) {
     return res;
 }
 
+async function getImage(word) {
+    let options = {
+        headers: {
+            Authorization: PEXELS_Key
+        }
+    };
+    let response = await fetch(`https://api.pexels.com/v1/search?query=${word}&per_page=1`, options);
+    let json = await response.json();
+    return json;
+}
+
 
 export {
     logLearingTime, getDuration, getSettings, setSetting, submitBug,
     getTodaysPlan, getRenRen, reportWordBug, starWord, getTodayPlanNum,
-    chatWithChatGPT
+    chatWithChatGPT, getImage
 }
 

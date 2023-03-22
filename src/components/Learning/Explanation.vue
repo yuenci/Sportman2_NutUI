@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="cells-container">
+    <div class="cells-container" >
         <div class="word">
             <div class="word-con">{{capitalizeFirstLetter}}</div>
             <div class="voice-icon" @click="playAudio"> <Voice /></div>
@@ -16,12 +16,14 @@
                 </div>
             </nut-collapse-item>
         </nut-collapse>
+        <img :src="imageUrl" alt="word image" v-show="imageUrl !== ''" class="word_image">
     </div>
     
 </template>
 <script>
 import StatusContainer from '../../statusContainer.js';
 import { Voice } from '@nutui/icons-vue';
+import { getImage } from '../../Tools.js';
 
 export default {
     emits: ['setStar'],
@@ -35,6 +37,7 @@ export default {
             freeDictionaryAPI: "",
             activeNames: ['0'],
             phonetic: "",
+            imageUrl: "",
         }
     },
     methods: {
@@ -85,6 +88,13 @@ export default {
         } catch (e) {
             this.$emit('setStar', false);
         }
+
+        // get image
+        getImage(this.word).then((data) => {
+            this.imageUrl = data.photos[0].src.portrait;
+            console.log(data);
+        });
+
     },
 
     computed: {
@@ -147,5 +157,10 @@ export default {
 
 .phonetic {
     text-align: center;
+}
+
+.word_image {
+    width: calc(100vw - 20px);
+    margin: 10px auto;
 }
 </style>
