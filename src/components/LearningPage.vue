@@ -6,13 +6,18 @@
                     <nut-indicator :block="true" algin="center" :size="pageSize" :current="currentPage + 1"
                         :fill-zero="false"></nut-indicator>
                 </nut-col>
-                <nut-col :span="11">
+                <nut-col :span="9">
                     <div v-if="currentPage === 0">Explanation</div>
                     <div v-if="currentPage === 1">Example</div>
                     <div v-if="currentPage === 2">Reading</div>
                     <div v-if="currentPage === 3">Writing</div>
                     <div v-if="currentPage === 4">Listening</div>
                     <div v-if="currentPage === 5">Speaking</div>
+                </nut-col>
+
+                <nut-col :span="2">
+                    <Loading width="16px" class="loading" v-if="showLoading"></Loading>
+                    <span v-else>&nbsp;</span>
                 </nut-col>
                 <nut-col :span="2">
                     <StarN width="16px" @click.stop="starHandle" :color="currentWordStar === true ? 'yellow' : ''"></StarN>
@@ -27,7 +32,7 @@
             <Explanation v-if="currentPage === 0" @setStar="setStar" />
             <Example v-if="currentPage === 1" />
             <Reading v-if="currentPage === 2" />
-            <Writing v-if="currentPage === 3" />
+            <Writing v-if="currentPage === 3" @showLoading="showLoadingIcon" @hideLoading="hideLoadingIcon" />
             <Listening v-if="currentPage === 4" :renrenData="renrenData" />
             <Speaking v-if="currentPage === 5" />
         </div>
@@ -52,7 +57,7 @@
     </div>
 </template>
 <script>
-import { RectLeft, RectRight, Check, StarN, Failure } from '@nutui/icons-vue';
+import { RectLeft, RectRight, Check, StarN, Failure, Loading } from '@nutui/icons-vue';
 import Explanation from './Learning/Explanation.vue';
 import Example from './Learning/Example.vue';
 import Reading from './Learning/Reading.vue';
@@ -67,7 +72,7 @@ import getQuotation from '../assets/quotations';
 
 export default {
     components: {
-        RectLeft, RectRight, Check, StarN, Failure,
+        RectLeft, RectRight, Check, StarN, Failure, Loading,
         Explanation, Example,
         Reading, Writing, Listening, Speaking
     },
@@ -80,6 +85,7 @@ export default {
             disabledRight: false,
             textSeleted: "",
             className: "",
+            showLoading: false,
             CheckClass: "hide",
             startTimeStamp: 0,
             renrenData: null,
@@ -347,6 +353,12 @@ export default {
             //console.log("switchMoveBtnShow");
             this.moveBtnShow = !this.moveBtnShow;
         },
+        showLoadingIcon() {
+            this.showLoading = true;
+        },
+        hideLoadingIcon() {
+            this.showLoading = false;
+        },
     },
 
     mounted() {
@@ -357,7 +369,7 @@ export default {
     beforeUnmount() {
         this.removeMouseUpToastMenuEvent();
         this.removerSlideSupport();
-    },
+    }
 }
 </script>
 <style scoped>
@@ -400,5 +412,20 @@ export default {
     left: 24px;
     border: 1px solid #ccc;
     resize: none
+}
+
+
+.loading {
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>

@@ -42,7 +42,7 @@ async function logLearingTime(id, time) {
 async function getDuration() {
     let response = await fetch(url + '/duration')
     let json = await response.json()
-    return json
+    return jsonengine
 }
 
 async function getSettings() {

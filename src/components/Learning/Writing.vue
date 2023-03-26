@@ -32,6 +32,7 @@ import { chatWithChatGPT } from "../../Tools"
 import { showNotify } from '@nutui/nutui';
 
 export default {
+    emits: ["showLoading", "hideLoading"],
     components: {
         Comment, MessageCard
     },
@@ -81,9 +82,11 @@ export default {
             this.chatWithGPT();
         },
         chatWithGPT() {
+            this.$emit("showLoading");
             chatWithChatGPT(this.messageList, this.word).then(res => {
                 try {
                     this.addMessageToList(res.message[0]);
+                    this.$emit("hideLoading");
                 } catch (e) {
                     console.log(e);
                     showNotify.warning("ChatGPT is not available now, please try again later.");
