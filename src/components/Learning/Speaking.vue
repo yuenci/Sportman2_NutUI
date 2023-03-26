@@ -7,6 +7,7 @@
 </template>
 <script>
 import getBGImage from '../../assets/speakingBG';
+import { showDialog } from '@nutui/nutui';
 export default {
     data() {
         return {
@@ -40,7 +41,19 @@ export default {
         },
         playRecord() {
             this.audioObj.play();
+            this.randomShow();
         },
+        randomShow() {
+            let str = "How did you make it!!";
+            if (Math.random() < 0.2) {
+                showDialog({
+                    content: str,
+                    noCancelBtn: true,
+                    onCancel: () => { },
+                    onOk: () => { },
+                });
+            }
+        }
     },
 
     created() {
