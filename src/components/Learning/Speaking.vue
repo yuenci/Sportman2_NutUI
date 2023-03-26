@@ -1,8 +1,11 @@
 <template>
     <div class="con" :style="{ backgroundImage: 'url(' + url + ')' }">
-        <nut-button type="info" @click="startRecord">Record</nut-button>
-        <nut-button type="info" @click="stopRecord">Stop</nut-button>
-        <nut-button type="info" @click="playRecord">Play</nut-button>
+        <img src="../../assets/recording.svg" alt="recording icon" class="record-icon" ref="record">
+        <div class="btn-con">
+            <nut-button type="info" @click="startRecord">Record</nut-button>
+            <nut-button type="info" @click="stopRecord">Stop</nut-button>
+            <nut-button type="info" @click="playRecord">Play</nut-button>
+        </div>
     </div>
 </template>
 <script>
@@ -33,11 +36,14 @@ export default {
                         const audioURL = URL.createObjectURL(blob);
                         const audio = new Audio(audioURL);
                         this.audioObj = audio;
+                        stream.getTracks().forEach(track => track.stop()); // without this, the mic will be occupied
                     };
                 });
+            this.$refs.record.style.opacity = 1;
         },
         stopRecord() {
             this.mediaRecorder.stop();
+            this.$refs.record.style.opacity = 0;
         },
         playRecord() {
             this.audioObj.play();
@@ -65,11 +71,24 @@ export default {
 </script>
 <style scoped>
 .con {
+    height: 100%;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-con {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
-    background-size: cover;
+}
+
+.record-icon {
+    width: 30%;
+    opacity: 0;
 }
 </style>
