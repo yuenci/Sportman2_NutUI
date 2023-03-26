@@ -1,9 +1,9 @@
-<template lang="">
+<template>
     <div class="con" :style="{ backgroundImage: 'url(' + url + ')' }">
-        <nut-button type="info">Record</nut-button>
-    <nut-button type="info">Stop</nut-button>
+        <nut-button type="info" @click="startRecord">Record</nut-button>
+        <nut-button type="info" @click="stopRecord">Stop</nut-button>
+        <nut-button type="info" @click="playRecord">Play</nut-button>
     </div>
-    
 </template>
 <script>
 import getBGImage from '../../assets/speakingBG';
@@ -12,7 +12,35 @@ export default {
         return {
             word: "",
             url: "",
+            chunks: [],
+            mediaRecorder: null,
+            audioObj: null,
         }
+    },
+    methods: {
+        startRecord() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    this.mediaRecorder = new MediaRecorder(stream);
+                    this.mediaRecorder.start();
+                    this.mediaRecorder.ondataavailable = e => {
+                        this.chunks.push(e.data);
+                    };
+                    this.mediaRecorder.onstop = e => {
+                        const blob = new Blob(this.chunks);
+                        this.chunks = [];
+                        const audioURL = URL.createObjectURL(blob);
+                        const audio = new Audio(audioURL);
+                        this.audioObj = audio;
+                    };
+                });
+        },
+        stopRecord() {
+            this.mediaRecorder.stop();
+        },
+        playRecord() {
+            this.audioObj.play();
+        },
     },
 
     created() {

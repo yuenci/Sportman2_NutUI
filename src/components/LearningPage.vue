@@ -80,7 +80,7 @@ export default {
         return {
             word: "",
             pageSize: 6,
-            currentPage: 0,
+            currentPage: 5,
             disabledLeft: true,
             disabledRight: false,
             textSeleted: "",
